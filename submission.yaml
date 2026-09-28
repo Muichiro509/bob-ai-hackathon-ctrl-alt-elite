@@ -9,16 +9,16 @@
 # =============================================================================
 
 team:
-  name: ""                             # REQUIRED — e.g., "Orion Squad"
-  track: ""                            # REQUIRED — one of: AI | DevOps | Sustainability | Open
+  name: "Ctrl+Alt+Elite"                             # REQUIRED — e.g., "Orion Squad"
+  track: "Forensic Science"                            # REQUIRED — one of: AI | DevOps | Sustainability | Open
   lead:
-    name: ""                           # REQUIRED — e.g., "Alice Chen"
-    email: ""                          # REQUIRED — e.g., "alice.chen@ibm.com"
+    name: "Devang Sorathiya"                           # REQUIRED — e.g., "Alice Chen"
+    email: "devangsorathiya502@gmail.com"                          # REQUIRED — e.g., "alice.chen@ibm.com"
   members:
-    - name: ""                         # REQUIRED — Team member 1
-      email: ""
-    - name: ""                         # Add more members by copying the two lines above
-      email: ""
+    - name: "Nikunj Patel"                         # REQUIRED — Team member 1
+      email: "patelnija523@gmail.com"
+    - name: "Nihar Ladva"                         # Add more members by copying the two lines above
+      email: "niharladva23@gmail.com"
     - name: ""
       email: ""
 
