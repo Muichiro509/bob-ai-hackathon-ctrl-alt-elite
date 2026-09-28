@@ -19,37 +19,43 @@ team:
       email: "patelnija523@gmail.com"
     - name: "Nihar Ladva"                         # Add more members by copying the two lines above
       email: "niharladva24@gmail.com"
-    - name: ""
-      email: ""
 
 submission:
-  title: ""                            # REQUIRED — Project display name, e.g., "SmartOps Dashboard"
+  title: "Documnet Authenitication"                            # REQUIRED — Project display name, e.g., "SmartOps Dashboard"
 
   problem_statement: >                 # REQUIRED — 1-3 sentences. What problem? Who has it?
-    Replace this text with a concise description of the real-world problem
-    your project addresses and who experiences it.
+    AI-Powered Document Forgery Detection Assistant
 
   solution_summary: >                  # REQUIRED — 1-3 sentences. What did you build?
-    Replace this text with a clear description of your solution
-    and how it addresses the problem above.
+    We built a guided forensic examination web application using Flask that enables Forensic Document Examiners (FDEs) to systematically analyse suspected forged documents through a structured 7-step workflow
+    The examiner inputs observations across five forensic categories:
+    🖋️ Font inconsistencies
+    ✍️ Signature mismatchez
+    📄 Paper anomalies
+    🖨️ Ink/toner alterations
+    💾 Digital metadata flags
+    A local rule-based scoring engine (no ML, no cloud API) then:
+    Matches keywords against a forensic term bank per category
+    Computes a forgery confidence score (0–100%) using keyword density + severity modifiers
+    Maps every finding to internationally recognised standards (ASTM E2285, ASTM E2290, SWGMAT, ISO 32000, NIST SP 800-86)
+    Auto-generates a court-admissible Expert Opinion Report with a unique reference ID, timestamped findings, and legal disclaimer
 
   key_features:                        # REQUIRED — List 3 to 5 specific features you implemented
-    - ""                               # e.g., "Real-time pipeline anomaly detection using watsonx.ai"
-    - ""
-    - ""
-    - ""                               # optional 4th
-    - ""                               # optional 5th
+    - "Guided 7-Step Examination Workflow A structured step-by-step UI covering all five forensic observation categories — font, signature, paper, ink/toner, and digital metadata — ensuring no category is missed during examination."                               # e.g., "Real-time pipeline anomaly detection using watsonx.ai"
+    - "Local Rule-Based Scoring Engine Keyword density + severity modifiers + detail weighting computes a forgery confidence score (0–100%) entirely offline — no ML model, no cloud API, no internet connection required."
+    - "International Standards Mapping Every finding is automatically linked to recognised forensic standards: ASTM E2285, ASTM E2290, SWGMAT, ISO 32000, NIST SP 800-86 — giving the analysis legal and scientific credibility."
+    - "Court-Admissible Expert Opinion Report Auto-generates a fully formatted report with a unique reference ID, timestamped findings, per-category standard citations, and a legal disclaimer — ready to attach to a case file immediately."                               # optional 4th
 
   tech_stack:
-    languages: []                      # REQUIRED — e.g., ["Python", "TypeScript"]
-    frameworks: []                     # e.g., ["FastAPI", "React"]
-    ibm_technologies: []               # e.g., ["watsonx.ai", "IBM Bob", "IBM Cloud Functions"]
-    databases: []                      # e.g., ["PostgreSQL", "Redis"]
-    other: []                          # e.g., ["Docker", "GitHub Actions", "Slack API"]
+    languages: [python]                      # REQUIRED — e.g., ["Python", "TypeScript"]
+    frameworks: [FastAPI]                     # e.g., ["FastAPI", "React"]
+    ibm_technologies: [IBM BOB]               # e.g., ["watsonx.ai", "IBM Bob", "IBM Cloud Functions"]
+    databases: [sqllite]                      # e.g., ["PostgreSQL", "Redis"]
+    other: [github action]                          # e.g., ["Docker", "GitHub Actions", "Slack API"]
 
   what_we_are_most_proud_of: >         # Optional but recommended — guides judges to your best work
-    Replace with what aspect of the submission you consider strongest
-    and want judges to pay special attention to.
+    We learned how to make an application with the help of IBM bob AI
+    and also learned how efficiently one can do it.
 
   known_limitations: >                 # Optional but recommended — be honest about gaps
     Replace with any known limitations, incomplete features,
