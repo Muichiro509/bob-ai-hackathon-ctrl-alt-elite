@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forensic Document Examination Assistant</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f4f6f9;
+      --surface: #ffffff;
+      --border: #d1d5db;
+      --text: #1a1d23;
+      --muted: #6b7280;
+      --accent: #1d4ed8;
+      --accent-light: #eff6ff;
+      --danger: #dc2626;
+      --danger-light: #fef2f2;
+      --warn: #d97706;
+      --warn-light: #fffbeb;
+      --success: #16a34a;
+      --success-light: #f0fdf4;
+      --radius: 8px;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.05);
+    }
+
+    body {
+      font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      background: var(--accent);
+      color: #fff;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      height: 60px;
+      box-shadow: 0 2px 4px rgba(0,0,0,.2);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    header .badge {
+      background: rgba(255,255,255,.2);
+      border-radius: 4px;
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+    }
+    header h1 { font-size: 16px; font-weight: 600; }
+    header .sub { font-size: 12px; opacity: .75; margin-left: auto; }
+
+    /* ── Layout ── */
+    .container { max-width: 960px; margin: 0 auto; padding: 28px 20px 60px; }
+
+    /* ── Steps nav ── */
+    .steps {
+      display: flex;
+      gap: 0;
+      margin-bottom: 28px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .step-btn {
+      flex: 1;
+      padding: 12px 8px;
+      background: none;
+      border: none;
+      border-right: 1px solid var(--border);
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+      text-align: center;
+      transition: background .15s, color .15s;
+      line-height: 1.4;
+    }
+    .step-btn:last-child { border-right: none; }
+    .step-btn.active { background: var(--accent); color: #fff; }
+    .step-btn.done { background: var(--accent-light); color: var(--accent); }
+    .step-btn .num {
+      display: block;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+    .card-title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-title .icon {
+      width: 28px; height: 28px;
+      background: var(--accent-light);
+      color: var(--accent);
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .card-desc { font-size: 12.5px; color: var(--muted); margin-bottom: 16px; }
+    .standard-pill {
+      display: inline-block;
+      background: var(--accent-light);
+      color: var(--accent);
+      border-radius: 4px;
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    /* ── Form elements ── */
+    label { display: block; font-size: 12.5px; font-weight: 600; margin-bottom: 5px; color: var(--text); }
+    input[type="text"], select, textarea {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 13.5px;
+      font-family: inherit;
+      background: var(--bg);
+      color: var(--text);
+      transition: border .15s;
+      resize: vertical;
+    }
+    input[type="text"]:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: #fff;
+    }
+    textarea { min-height: 90px; }
+    .hint { font-size: 11.5px; color: var(--muted); margin-top: 5px; }
+
+    .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 600px) { .row2 { grid-template-columns: 1fr; } }
+
+    /* ── Buttons ── */
+    .btn-row { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+    button.btn {
+      padding: 9px 22px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity .15s;
+    }
+    button.btn:hover { opacity: .88; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-secondary { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
+    .btn-danger { background: var(--danger); color: #fff; }
+    .btn-large { padding: 12px 32px; font-size: 15px; }
+
+    /* ── Pages ── */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* ── Results ── */
+    .verdict-banner {
+      border-radius: var(--radius);
+      padding: 18px 22px;
+      margin-bottom: 20px;
+      font-size: 17px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .verdict-banner .icon { font-size: 26px; }
+    .verdict-banner.confirmed { background: var(--danger-light); color: var(--danger); border: 1.5px solid #fca5a5; }
+    .verdict-banner.suspected { background: var(--warn-light); color: var(--warn); border: 1.5px solid #fcd34d; }
+    .verdict-banner.inconclusive { background: #f8fafc; color: #374151; border: 1.5px solid var(--border); }
+    .verdict-banner.genuine { background: var(--success-light); color: var(--success); border: 1.5px solid #86efac; }
+
+    .confidence-meter {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+    }
+    .confidence-meter .label { font-weight: 600; min-width: 180px; font-size: 13px; }
+    .bar-track { flex: 1; background: #e5e7eb; border-radius: 20px; height: 12px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 20px; transition: width .6s ease; }
+    .bar-fill.high { background: var(--danger); }
+    .bar-fill.moderate { background: var(--warn); }
+    .bar-fill.low { background: #60a5fa; }
+    .confidence-meter .pct { font-size: 20px; font-weight: 700; min-width: 50px; text-align: right; }
+
+    .finding-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+    .finding-header {
+      padding: 12px 16px;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .finding-header .badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+    }
+    .badge.very-high { background: #fee2e2; color: var(--danger); }
+    .badge.high { background: #fef3c7; color: #b45309; }
+    .badge.moderate { background: #e0f2fe; color: #0369a1; }
+    .badge.low { background: #f0fdf4; color: var(--success); }
+    .finding-header .title { font-weight: 600; font-size: 13.5px; flex: 1; }
+    .finding-header .chevron { transition: transform .2s; font-size: 12px; color: var(--muted); }
+    .finding-body { padding: 16px; border-top: 1px solid var(--border); display: none; }
+    .finding-body.open { display: block; }
+    .finding-body .obs-text {
+      background: var(--bg);
+      border-left: 3px solid var(--accent);
+      padding: 10px 14px;
+      border-radius: 0 6px 6px 0;
+      font-size: 13px;
+      color: var(--text);
+      margin-bottom: 12px;
+      font-style: italic;
+    }
+    .indicator-list { list-style: none; }
+    .indicator-list li { padding: 4px 0; font-size: 13px; color: var(--muted); }
+    .indicator-list li::before { content: "▸ "; color: var(--accent); }
+    .kw-pill {
+      display: inline-block;
+      background: var(--accent-light);
+      color: var(--accent);
+      border-radius: 20px;
+      padding: 1px 8px;
+      font-size: 11px;
+      font-weight: 600;
+      margin: 2px 3px 2px 0;
+    }
+
+    .report-box {
+      background: #0d1117;
+      color: #c9d1d9;
+      padding: 20px;
+      border-radius: var(--radius);
+      font-family: "Courier New", Courier, monospace;
+      font-size: 12px;
+      line-height: 1.7;
+      white-space: pre;
+      overflow-x: auto;
+      max-height: 480px;
+      overflow-y: auto;
+    }
+
+    .spinner {
+      display: none;
+      width: 22px; height: 22px;
+      border: 3px solid #fff;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading .spinner { display: inline-block; }
+    .loading .btn-text { display: none; }
+
+    /* Alert */
+    .alert { padding: 12px 16px; border-radius: 6px; margin-bottom: 16px; font-size: 13px; }
+    .alert-warn { background: var(--warn-light); color: var(--warn); border: 1px solid #fcd34d; }
+  </style>
+</head>
+<body>
+
+<header>
+  <span class="badge">FDE</span>
+  <h1>Forensic Document Examination Assistant</h1>
+  <span class="sub">Local Analysis Engine · No external API required</span>
+</header>
+
+<div class="container">
+
+  <!-- Step navigation -->
+  <nav class="steps" id="stepNav">
+    <button class="step-btn active" onclick="goStep(0)"><span class="num">1</span>Document Info</button>
+    <button class="step-btn" onclick="goStep(1)"><span class="num">2</span>Font &amp; Typography</button>
+    <button class="step-btn" onclick="goStep(2)"><span class="num">3</span>Signature</button>
+    <button class="step-btn" onclick="goStep(3)"><span class="num">4</span>Paper &amp; Substrate</button>
+    <button class="step-btn" onclick="goStep(4)"><span class="num">5</span>Ink &amp; Toner</button>
+    <button class="step-btn" onclick="goStep(5)"><span class="num">6</span>Digital Metadata</button>
+    <button class="step-btn" onclick="goStep(6)"><span class="num">7</span>Submit</button>
+  </nav>
+
+  <!-- ── Page 0: Document Info ── -->
+  <div class="page active" id="page-0">
+    <div class="card">
+      <div class="card-title"><span class="icon">📄</span> Document Information</div>
+      <p class="card-desc">Provide basic details about the document under examination.</p>
+      <div class="row2">
+        <div>
+          <label for="doc_type">Document Type</label>
+          <select id="doc_type">
+            <option value="">— Select —</option>
+            <option>COVID Vaccination Certificate</option>
+            <option>Degree / Educational Certificate</option>
+            <option>Property Document / Sale Deed</option>
+            <option>FIR / Police Report</option>
+            <option>Passport</option>
+            <option>Aadhaar Card</option>
+            <option>Cheque / Demand Draft</option>
+            <option>Affidavit / Court Document</option>
+            <option>Identity Card</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div>
+          <label for="examiner_name">Examiner Name</label>
+          <input type="text" id="examiner_name" placeholder="e.g. Dr. Ramesh Kumar" />
+        </div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="goStep(1)">Next →</button>
+    </div>
+  </div>
+
+  <!-- ── Page 1: Font ── -->
+  <div class="page" id="page-1">
+    <div class="card">
+      <div class="card-title"><span class="icon">🔤</span> Font &amp; Typography Inconsistencies</div>
+      <span class="standard-pill">ASTM E2285 / OSAC FDE Standard</span>
+      <p class="card-desc">Describe any font anomalies observed — mixed typefaces, spacing issues, character size changes, blurry or resampled text, pixel artifacts around inserted sections.</p>
+      <label for="font_obs">Observations</label>
+      <textarea id="font_obs" rows="5" placeholder="e.g. The name field uses a different font size and typeface compared to the rest of the certificate. There are visible pixel compression artifacts around the inserted text block. Kerning is inconsistent between the heading and body text..."></textarea>
+      <p class="hint">Tip: Describe what you see — the engine identifies forensic markers automatically.</p>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="goStep(0)">← Back</button>
+      <button class="btn btn-primary" onclick="goStep(2)">Next →</button>
+    </div>
+  </div>
+
+  <!-- ── Page 2: Signature ── -->
+  <div class="page" id="page-2">
+    <div class="card">
+      <div class="card-title"><span class="icon">✍️</span> Signature / Handwriting Mismatch</div>
+      <span class="standard-pill">SWGMAT / ASTM E2290</span>
+      <p class="card-desc">Record observations about the signature or handwriting — pen lifts, tracing marks, proportional anomalies, ink flow irregularities, comparison with known exemplars.</p>
+      <label for="sig_obs">Observations</label>
+      <textarea id="sig_obs" rows="5" placeholder="e.g. The signature shows signs of tracing — unnatural tremor in pen strokes and inconsistent ink density. Compared with reference exemplars, the loop proportions are significantly different. Pen lift points appear forced and unnatural..."></textarea>
+      <p class="hint">Leave blank if no signature is present on the document.</p>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="goStep(1)">← Back</button>
+      <button class="btn btn-primary" onclick="goStep(3)">Next →</button>
+    </div>
+  </div>
+
+  <!-- ── Page 3: Paper ── -->
+  <div class="page" id="page-3">
+    <div class="card">
+      <div class="card-title"><span class="icon">📋</span> Paper &amp; Substrate Anomalies</div>
+      <span class="standard-pill">ISO/IEC 14443 / ASTM E2289</span>
+      <p class="card-desc">Document physical paper anomalies — missing or misaligned watermarks, security thread issues, paper texture inconsistencies, UV fluorescence anomalies, indentation marks.</p>
+      <label for="paper_obs">Observations</label>
+      <textarea id="paper_obs" rows="5" placeholder="e.g. The watermark is absent from the right-hand quadrant where it should appear. Under UV light, the paper shows fluorescence inconsistent with the standard government issue. The paper grain direction differs between the top and bottom halves..."></textarea>
+      <p class="hint">Physical examination findings including tactile observations are relevant here.</p>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="goStep(2)">← Back</button>
+      <button class="btn btn-primary" onclick="goStep(4)">Next →</button>
+    </div>
+  </div>
+
+  <!-- ── Page 4: Ink ── -->
+  <div class="page" id="page-4">
+    <div class="card">
+      <div class="card-title"><span class="icon">🖊️</span> Ink / Toner Alteration</div>
+      <span class="standard-pill">ASTM E2926 / SWGMAT Ink Standards</span>
+      <p class="card-desc">Note any ink-related anomalies — feathering, chemical erasure, obliteration, overwriting, correction fluid residue, toner adhesion issues, multiple ink types.</p>
+      <label for="ink_obs">Observations</label>
+      <textarea id="ink_obs" rows="5" placeholder="e.g. There is clear evidence of chemical erasure in the date field — residue visible under oblique lighting. The ink in the altered section shows different feathering characteristics compared to adjacent text. ESDA analysis reveals indented writing beneath the surface..."></textarea>
+      <p class="hint">Include observations from ESDA, IR reflectography, or chemical tests if performed.</p>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="goStep(3)">← Back</button>
+      <button class="btn btn-primary" onclick="goStep(5)">Next →</button>
+    </div>
+  </div>
+
+  <!-- ── Page 5: Metadata ── -->
+  <div class="page" id="page-5">
+    <div class="card">
+      <div class="card-title"><span class="icon">💻</span> Digital Metadata Irregularities</div>
+      <span class="standard-pill">ISO 32000 / NIST SP 800-86</span>
+      <p class="card-desc">For digital documents — timestamp discrepancies, author field mismatches, software version anomalies, hash mismatches, absent digital signatures.</p>
+      <label for="meta_obs">Observations</label>
+      <textarea id="meta_obs" rows="5" placeholder="e.g. The PDF metadata shows a creation date of 2023 but the document claims to be issued in 2021. The author field contains a different organization name. The digital signature is absent. Embedded thumbnail does not match the visible document content..."></textarea>
+      <p class="hint">Leave blank for physical-only documents without a digital component.</p>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="goStep(4)">← Back</button>
+      <button class="btn btn-primary" onclick="goStep(6)">Next →</button>
+    </div>
+  </div>
+
+  <!-- ── Page 6: Submit ── -->
+  <div class="page" id="page-6">
+    <div class="card">
+      <div class="card-title"><span class="icon">📝</span> Additional Examiner Notes</div>
+      <p class="card-desc">Add any observations not covered in the categories above — case context, chain of custody notes, lab conditions, or any other relevant information.</p>
+      <label for="examiner_notes">Notes (optional)</label>
+      <textarea id="examiner_notes" rows="4" placeholder="e.g. Document submitted by the court on 12/01/2024. Physical examination conducted under controlled lighting at 20°C..."></textarea>
+    </div>
+    <div id="submitAlert" class="alert alert-warn" style="display:none">
+      Please select a document type before submitting.
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="goStep(5)">← Back</button>
+      <button class="btn btn-primary btn-large" id="submitBtn" onclick="submitForm()">
+        <span class="spinner"></span>
+        <span class="btn-text">🔍 Run Forensic Analysis</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ── Results Page ── -->
+  <div class="page" id="page-results">
+    <div id="verdictBanner" class="verdict-banner">
+      <span class="icon" id="verdictIcon"></span>
+      <div>
+        <div id="verdictText"></div>
+        <div id="verdictSub" style="font-size:13px; font-weight:400; margin-top:3px;"></div>
+      </div>
+    </div>
+
+    <div class="confidence-meter">
+      <div class="label">Overall Forgery Confidence</div>
+      <div class="bar-track"><div class="bar-fill" id="confBar" style="width:0%"></div></div>
+      <div class="pct" id="confPct">0%</div>
+    </div>
+
+    <div id="findingsContainer"></div>
+
+    <div class="card" style="margin-top:20px;">
+      <div class="card-title"><span class="icon">📑</span> Expert Opinion Report</div>
+      <p class="card-desc">Court-admissible formatted report. Copy or print for submission.</p>
+      <div class="btn-row" style="margin-top:0; margin-bottom:14px;">
+        <button class="btn btn-secondary" onclick="copyReport()">📋 Copy Report</button>
+        <button class="btn btn-secondary" onclick="printReport()">🖨️ Print</button>
+      </div>
+      <div class="report-box" id="reportBox"></div>
+    </div>
+
+    <div class="btn-row" style="margin-top:24px;">
+      <button class="btn btn-secondary" onclick="resetForm()">← New Examination</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let currentStep = 0;
+  const TOTAL_STEPS = 7;
+  let lastReport = "";
+
+  function goStep(n) {
+    document.getElementById('page-' + currentStep).classList.remove('active');
+    document.querySelectorAll('.step-btn')[currentStep].classList.remove('active');
+    if (n > currentStep) {
+      document.querySelectorAll('.step-btn')[currentStep].classList.add('done');
+    }
+    currentStep = n;
+    document.getElementById('page-' + n).classList.add('active');
+    document.querySelectorAll('.step-btn')[n].classList.remove('done');
+    document.querySelectorAll('.step-btn')[n].classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  async function submitForm() {
+    const docType = document.getElementById('doc_type').value;
+    if (!docType) {
+      document.getElementById('submitAlert').style.display = 'block';
+      return;
+    }
+    document.getElementById('submitAlert').style.display = 'none';
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.classList.add('loading');
+
+    const payload = {
+      document_type: docType,
+      examiner_name: document.getElementById('examiner_name').value,
+      font_obs: document.getElementById('font_obs').value,
+      signature_obs: document.getElementById('sig_obs').value,
+      paper_obs: document.getElementById('paper_obs').value,
+      ink_obs: document.getElementById('ink_obs').value,
+      metadata_obs: document.getElementById('meta_obs').value,
+      examiner_notes: document.getElementById('examiner_notes').value,
+    };
+
+    try {
+      const resp = await fetch('/analyze', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const data = await resp.json();
+      renderResults(data);
+    } catch (e) {
+      alert('Analysis failed. Make sure the Flask server is running.');
+    } finally {
+      btn.disabled = false;
+      btn.classList.remove('loading');
+    }
+  }
+
+  function renderResults(data) {
+    // Hide all step pages, show results
+    for (let i = 0; i <= TOTAL_STEPS; i++) {
+      const p = document.getElementById('page-' + i);
+      if (p) p.classList.remove('active');
+    }
+    document.querySelectorAll('.step-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('page-results').classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Verdict banner
+    const pct = Math.round(data.overall_confidence * 100);
+    const verdict = data.verdict;
+    const banner = document.getElementById('verdictBanner');
+    const icon = document.getElementById('verdictIcon');
+    const text = document.getElementById('verdictText');
+    const sub = document.getElementById('verdictSub');
+
+    banner.className = 'verdict-banner';
+    if (verdict.includes('Confirmed')) {
+      banner.classList.add('confirmed'); icon.textContent = '🚨';
+    } else if (verdict.includes('Suspected')) {
+      banner.classList.add('suspected'); icon.textContent = '⚠️';
+    } else if (verdict.includes('Inconclusive')) {
+      banner.classList.add('inconclusive'); icon.textContent = '🔍';
+    } else {
+      banner.classList.add('genuine'); icon.textContent = '✅';
+    }
+    text.textContent = verdict;
+    sub.textContent = data.document_type + ' · Primary anomaly: ' + data.primary_anomaly;
+
+    // Confidence bar
+    const bar = document.getElementById('confBar');
+    bar.style.width = pct + '%';
+    bar.className = 'bar-fill';
+    if (pct >= 70) bar.classList.add('high');
+    else if (pct >= 40) bar.classList.add('moderate');
+    else bar.classList.add('low');
+    document.getElementById('confPct').textContent = pct + '%  (' + data.overall_confidence_label + ')';
+
+    // Findings
+    const container = document.getElementById('findingsContainer');
+    container.innerHTML = '';
+    data.findings.forEach((f, idx) => {
+      const confPct = Math.round(f.confidence * 100);
+      const badgeClass = f.confidence_label.toLowerCase().replace(' ', '-');
+      const kws = f.matched_keywords.slice(0, 6).map(k => `<span class="kw-pill">${k}</span>`).join('');
+      const indicators = f.relevant_indicators.map(i => `<li>${i}</li>`).join('');
+
+      container.innerHTML += `
+        <div class="finding-card">
+          <div class="finding-header" onclick="toggleFinding(${idx})">
+            <span class="badge ${badgeClass}">${f.confidence_label} — ${confPct}%</span>
+            <span class="title">${f.label}</span>
+            <span class="chevron" id="chev-${idx}">▼</span>
+          </div>
+          <div class="finding-body" id="body-${idx}">
+            <p style="font-size:12px; color:var(--muted); margin-bottom:8px;">
+              <strong>Standard:</strong> ${f.standard} — ${f.standard_description}
+            </p>
+            <div class="obs-text">"${f.raw_observation}"</div>
+            ${kws ? `<div style="margin-bottom:10px;"><strong style="font-size:12px;">Forensic markers:</strong><br>${kws}</div>` : ''}
+            <strong style="font-size:12px;">Applicable examination indicators:</strong>
+            <ul class="indicator-list">${indicators}</ul>
+          </div>
+        </div>`;
+    });
+
+    // Report
+    lastReport = data.report;
+    document.getElementById('reportBox').textContent = data.report;
+  }
+
+  function toggleFinding(idx) {
+    const body = document.getElementById('body-' + idx);
+    const chev = document.getElementById('chev-' + idx);
+    body.classList.toggle('open');
+    chev.style.transform = body.classList.contains('open') ? 'rotate(180deg)' : '';
+  }
+
+  function copyReport() {
+    navigator.clipboard.writeText(lastReport).then(() => alert('Report copied to clipboard.'));
+  }
+
+  function printReport() {
+    const w = window.open('', '_blank');
+    w.document.write('<pre style="font-family:monospace;font-size:12px;padding:20px;">' + lastReport + '</pre>');
+    w.print();
+  }
+
+  function resetForm() {
+    document.getElementById('page-results').classList.remove('active');
+    document.querySelectorAll('.step-btn').forEach((b, i) => {
+      b.classList.remove('active', 'done');
+      if (i === 0) b.classList.add('active');
+    });
+    currentStep = 0;
+    document.getElementById('page-0').classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
