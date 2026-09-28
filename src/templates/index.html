@@ -25,6 +25,20 @@
       --shadow: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.05);
     }
 
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f1117;
+        --surface: #1a1d23;
+        --border: #2d3139;
+        --text: #e8eaf0;
+        --muted: #9ca3af;
+        --accent-light: #1e2d4f;
+        --danger-light: #2d1515;
+        --warn-light: #2d1f0a;
+        --success-light: #0f2d1a;
+      }
+    }
+
     body {
       font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
       font-size: 14px;
@@ -61,7 +75,7 @@
     header .sub { font-size: 12px; opacity: .75; margin-left: auto; }
 
     /* ── Layout ── */
-    .container { max-width: 960px; margin: 0 auto; padding: 28px 20px 60px; }
+    .container { max-width: 1080px; margin: 0 auto; padding: 28px 20px 80px; }
 
     /* ── Steps nav ── */
     .steps {
@@ -127,16 +141,6 @@
       flex-shrink: 0;
     }
     .card-desc { font-size: 12.5px; color: var(--muted); margin-bottom: 16px; }
-    .standard-pill {
-      display: inline-block;
-      background: var(--accent-light);
-      color: var(--accent);
-      border-radius: 4px;
-      padding: 2px 8px;
-      font-size: 11px;
-      font-weight: 600;
-      margin-bottom: 14px;
-    }
 
     /* ── Form elements ── */
     label { display: block; font-size: 12.5px; font-weight: 600; margin-bottom: 5px; color: var(--text); }
@@ -155,16 +159,16 @@
     input[type="text"]:focus, select:focus, textarea:focus {
       outline: none;
       border-color: var(--accent);
-      background: #fff;
+      background: var(--surface);
     }
     textarea { min-height: 90px; }
     .hint { font-size: 11.5px; color: var(--muted); margin-top: 5px; }
-
     .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     @media (max-width: 600px) { .row2 { grid-template-columns: 1fr; } }
 
     /* ── Buttons ── */
     .btn-row { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+    .btn-row.space-between { justify-content: space-between; }
     button.btn {
       padding: 9px 22px;
       border: none;
@@ -177,7 +181,6 @@
     button.btn:hover { opacity: .88; }
     .btn-primary { background: var(--accent); color: #fff; }
     .btn-secondary { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
-    .btn-danger { background: var(--danger); color: #fff; }
     .btn-large { padding: 12px 32px; font-size: 15px; }
 
     /* ── Pages ── */
@@ -198,7 +201,7 @@
     .verdict-banner .icon { font-size: 26px; }
     .verdict-banner.confirmed { background: var(--danger-light); color: var(--danger); border: 1.5px solid #fca5a5; }
     .verdict-banner.suspected { background: var(--warn-light); color: var(--warn); border: 1.5px solid #fcd34d; }
-    .verdict-banner.inconclusive { background: #f8fafc; color: #374151; border: 1.5px solid var(--border); }
+    .verdict-banner.inconclusive { background: var(--bg); color: #374151; border: 1.5px solid var(--border); }
     .verdict-banner.genuine { background: var(--success-light); color: var(--success); border: 1.5px solid #86efac; }
 
     .confidence-meter {
@@ -213,7 +216,7 @@
     }
     .confidence-meter .label { font-weight: 600; min-width: 180px; font-size: 13px; }
     .bar-track { flex: 1; background: #e5e7eb; border-radius: 20px; height: 12px; overflow: hidden; }
-    .bar-fill { height: 100%; border-radius: 20px; transition: width .6s ease; }
+    .bar-fill { height: 100%; border-radius: 20px; transition: width .5s ease; }
     .bar-fill.high { background: var(--danger); }
     .bar-fill.moderate { background: var(--warn); }
     .bar-fill.low { background: #60a5fa; }
@@ -234,7 +237,7 @@
       cursor: pointer;
       user-select: none;
     }
-    .finding-header .badge {
+    .finding-header .fc-badge {
       font-size: 11px;
       font-weight: 700;
       padding: 2px 8px;
@@ -242,10 +245,10 @@
       text-transform: uppercase;
       letter-spacing: .4px;
     }
-    .badge.very-high { background: #fee2e2; color: var(--danger); }
-    .badge.high { background: #fef3c7; color: #b45309; }
-    .badge.moderate { background: #e0f2fe; color: #0369a1; }
-    .badge.low { background: #f0fdf4; color: var(--success); }
+    .fc-badge.very-high { background: #fee2e2; color: var(--danger); }
+    .fc-badge.high      { background: #fef3c7; color: #b45309; }
+    .fc-badge.moderate  { background: #e0f2fe; color: #0369a1; }
+    .fc-badge.low       { background: #f0fdf4; color: var(--success); }
     .finding-header .title { font-weight: 600; font-size: 13.5px; flex: 1; }
     .finding-header .chevron { transition: transform .2s; font-size: 12px; color: var(--muted); }
     .finding-body { padding: 16px; border-top: 1px solid var(--border); display: none; }
@@ -300,7 +303,6 @@
     .loading .spinner { display: inline-block; }
     .loading .btn-text { display: none; }
 
-    /* Alert */
     .alert { padding: 12px 16px; border-radius: 6px; margin-bottom: 16px; font-size: 13px; }
     .alert-warn { background: var(--warn-light); color: var(--warn); border: 1px solid #fcd34d; }
 
@@ -338,7 +340,6 @@
       justify-content: center;
       padding: 0 5px;
     }
-
     .hist-overlay {
       display: none;
       position: fixed; inset: 0;
@@ -346,7 +347,6 @@
       z-index: 300;
     }
     .hist-overlay.open { display: block; }
-
     .hist-drawer {
       position: fixed;
       top: 0; right: 0;
@@ -362,7 +362,6 @@
       transition: transform .25s ease;
     }
     .hist-drawer.open { transform: translateX(0); }
-
     .hist-header {
       padding: 18px 20px;
       border-bottom: 1px solid var(--border);
@@ -383,19 +382,8 @@
       font-size: 12px; color: var(--muted); cursor: pointer;
     }
     .hist-clear:hover { border-color: var(--danger); color: var(--danger); }
-
-    .hist-list {
-      flex: 1;
-      overflow-y: auto;
-      padding: 12px;
-    }
-    .hist-empty {
-      text-align: center;
-      color: var(--muted);
-      padding: 48px 20px;
-      font-size: 13px;
-    }
-
+    .hist-list { flex: 1; overflow-y: auto; padding: 12px; }
+    .hist-empty { text-align: center; color: var(--muted); padding: 48px 20px; font-size: 13px; }
     .hist-item {
       border: 1px solid var(--border);
       border-radius: var(--radius);
@@ -406,52 +394,187 @@
       position: relative;
     }
     .hist-item:hover { border-color: var(--accent); background: var(--accent-light); }
-    .hist-item .hi-top {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 5px;
-    }
-    .hist-item .hi-doc {
-      font-weight: 600;
-      font-size: 13px;
-      flex: 1;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .hist-item .hi-time {
-      font-size: 11px;
-      color: var(--muted);
-      white-space: nowrap;
-    }
-    .hist-item .hi-verdict {
-      font-size: 12px;
-      color: var(--muted);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+    .hist-item .hi-top { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+    .hist-item .hi-doc { font-weight: 600; font-size: 13px; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .hist-item .hi-time { font-size: 11px; color: var(--muted); white-space: nowrap; }
+    .hist-item .hi-verdict { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .hist-item .hi-del {
-      position: absolute;
-      top: 8px; right: 8px;
-      background: none; border: none;
-      font-size: 13px; cursor: pointer;
-      color: var(--muted); padding: 2px 5px;
-      border-radius: 3px; opacity: 0;
-      transition: opacity .15s;
+      position: absolute; top: 8px; right: 8px;
+      background: none; border: none; font-size: 13px; cursor: pointer;
+      color: var(--muted); padding: 2px 5px; border-radius: 3px; opacity: 0; transition: opacity .15s;
     }
     .hist-item:hover .hi-del { opacity: 1; }
     .hist-item .hi-del:hover { color: var(--danger); background: var(--danger-light); }
-
-    .hist-item .hi-bar {
-      height: 4px;
-      border-radius: 4px;
-      margin-top: 8px;
-    }
+    .hist-item .hi-bar { height: 4px; border-radius: 4px; margin-top: 8px; }
     .hist-item .hi-bar.high { background: var(--danger); }
     .hist-item .hi-bar.moderate { background: var(--warn); }
     .hist-item .hi-bar.low { background: #60a5fa; }
+
+    /* ══════════════════════════════════════════════════════════
+       OBSERVATIONS PAGE (page-1) — two-column layout
+    ══════════════════════════════════════════════════════════ */
+
+    .obs-layout {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: 20px;
+      align-items: start;
+    }
+    @media (max-width: 800px) {
+      .obs-layout { grid-template-columns: 1fr; }
+      .obs-summary { order: -1; }
+    }
+
+    /* ── Category cards (left column) ── */
+    .cat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+    .cat-card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 16px;
+      cursor: pointer;
+      user-select: none;
+      background: var(--surface);
+      transition: background .12s;
+    }
+    .cat-card-header:hover { background: var(--bg); }
+    .cat-icon {
+      width: 26px; height: 26px;
+      background: var(--accent-light);
+      color: var(--accent);
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+    .cat-name { font-weight: 600; font-size: 13.5px; flex: 1; }
+    .cat-counter {
+      font-size: 11px;
+      color: var(--muted);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 1px 8px;
+      white-space: nowrap;
+    }
+    .cat-counter.has-ticked { background: var(--accent-light); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+    .cat-chevron { font-size: 11px; color: var(--muted); transition: transform .2s; flex-shrink: 0; }
+    .cat-card.collapsed .cat-chevron { transform: rotate(-90deg); }
+
+    .cat-body { border-top: 1px solid var(--border); }
+    .cat-card.collapsed .cat-body { display: none; }
+
+    /* ── Finding rows ── */
+    .finding-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      transition: background .1s;
+    }
+    .finding-row:last-child { border-bottom: none; }
+    .finding-row:hover { background: var(--bg); }
+
+    .finding-row input[type="checkbox"] {
+      width: 16px; height: 16px;
+      accent-color: var(--accent);
+      cursor: pointer;
+      flex-shrink: 0;
+      margin: 0;
+      border-radius: 3px;
+    }
+    .finding-row .finding-text {
+      flex: 1;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.4;
+      transition: color .15s;
+    }
+    .finding-row.ticked .finding-text { color: var(--text); font-weight: 500; }
+
+    /* ── Severity chip ── */
+    .sev-chip {
+      display: none;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 9px;
+      border-radius: 20px;
+      cursor: pointer;
+      border: none;
+      letter-spacing: .3px;
+      white-space: nowrap;
+      transition: opacity .15s;
+      flex-shrink: 0;
+    }
+    .finding-row.ticked .sev-chip { display: inline-flex; align-items: center; gap: 4px; }
+    .sev-chip.minor    { background: #dbeafe; color: #1d4ed8; }
+    .sev-chip.moderate { background: #fef3c7; color: #b45309; }
+    .sev-chip.strong   { background: #fee2e2; color: #dc2626; }
+    .sev-chip:hover { opacity: .8; }
+
+    /* ── Live summary card (right column) ── */
+    .obs-summary {
+      position: sticky;
+      top: 80px;
+    }
+    .summary-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px;
+    }
+    .summary-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    /* ── Semicircle gauge ── */
+    .gauge-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .gauge-svg { overflow: visible; }
+    .gauge-track { fill: none; stroke: #e5e7eb; stroke-width: 10; }
+    .gauge-fill  { fill: none; stroke-width: 10; stroke-linecap: round;
+                   transition: stroke-dashoffset .5s ease, stroke .4s ease; }
+    .gauge-pct   { font-size: 22px; font-weight: 700; fill: var(--text); text-anchor: middle; dominant-baseline: middle; }
+    .gauge-label { font-size: 12px; color: var(--muted); margin-top: 6px; text-align: center; font-weight: 500; }
+
+    /* ── Summary rows ── */
+    .sum-rows { border-top: 1px solid var(--border); padding-top: 14px; margin-top: 4px; }
+    .sum-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px 0;
+      font-size: 13px;
+    }
+    .sum-row .sr-key { color: var(--muted); }
+    .sum-row .sr-val { font-weight: 600; text-align: right; max-width: 55%; word-break: break-word; font-size: 12.5px; }
+
+    /* ── Category bars ── */
+    .cat-bars { margin-top: 14px; border-top: 1px solid var(--border); padding-top: 14px; }
+    .cat-bar-label { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--muted); margin-bottom: 3px; }
+    .cat-bar-label .cb-name { font-weight: 500; color: var(--text); }
+    .cat-bar-track { background: #e5e7eb; border-radius: 6px; height: 6px; overflow: hidden; margin-bottom: 9px; }
+    .cat-bar-fill { height: 100%; border-radius: 6px; transition: width .4s ease, background .3s; }
   </style>
 </head>
 <body>
@@ -482,15 +605,11 @@
 
 <div class="container">
 
-  <!-- Step navigation -->
+  <!-- Step navigation (3 steps) -->
   <nav class="steps" id="stepNav">
     <button class="step-btn active" onclick="goStep(0)"><span class="num">1</span>Document Info</button>
-    <button class="step-btn" onclick="goStep(1)"><span class="num">2</span>Font &amp; Typography</button>
-    <button class="step-btn" onclick="goStep(2)"><span class="num">3</span>Signature</button>
-    <button class="step-btn" onclick="goStep(3)"><span class="num">4</span>Paper &amp; Substrate</button>
-    <button class="step-btn" onclick="goStep(4)"><span class="num">5</span>Ink &amp; Toner</button>
-    <button class="step-btn" onclick="goStep(5)"><span class="num">6</span>Digital Metadata</button>
-    <button class="step-btn" onclick="goStep(6)"><span class="num">7</span>Submit</button>
+    <button class="step-btn"        onclick="goStep(1)"><span class="num">2</span>Observations</button>
+    <button class="step-btn"        onclick="goStep(2)"><span class="num">3</span>Submit &amp; Report</button>
   </nav>
 
   <!-- ── Page 0: Document Info ── -->
@@ -526,99 +645,284 @@
     </div>
   </div>
 
-  <!-- ── Page 1: Font ── -->
+  <!-- ── Page 1: Observations (new two-column UI) ── -->
   <div class="page" id="page-1">
-    <div class="card">
-      <div class="card-title"><span class="icon">🔤</span> Font &amp; Typography Inconsistencies</div>
-      <span class="standard-pill">ASTM E2285 / OSAC FDE Standard</span>
-      <p class="card-desc">Describe any font anomalies observed — mixed typefaces, spacing issues, character size changes, blurry or resampled text, pixel artifacts around inserted sections.</p>
-      <label for="font_obs">Observations</label>
-      <textarea id="font_obs" rows="5" placeholder="e.g. The name field uses a different font size and typeface compared to the rest of the certificate. There are visible pixel compression artifacts around the inserted text block. Kerning is inconsistent between the heading and body text..."></textarea>
-      <p class="hint">Tip: Describe what you see — the engine identifies forensic markers automatically.</p>
-    </div>
-    <div class="btn-row">
-      <button class="btn btn-secondary" onclick="goStep(0)">← Back</button>
-      <button class="btn btn-primary" onclick="goStep(2)">Next →</button>
-    </div>
-  </div>
 
-  <!-- ── Page 2: Signature ── -->
+    <div class="obs-layout">
+
+      <!-- LEFT: category cards -->
+      <div class="obs-categories">
+
+        <!-- Category 1: Typography -->
+        <div class="cat-card" id="cat-0">
+          <div class="cat-card-header" onclick="toggleCat(0)">
+            <span class="cat-icon">🔤</span>
+            <span class="cat-name">Typography &amp; Text</span>
+            <span class="cat-counter" id="counter-0">0 of 5 ticked</span>
+            <span class="cat-chevron">▼</span>
+          </div>
+          <div class="cat-body" id="catbody-0">
+            <div class="finding-row" data-cat="0" data-idx="0" data-finding="Mixed font families within a single typed field">
+              <input type="checkbox" onchange="onTick(this)">
+              <span class="finding-text">Mixed font families within a single typed field</span>
+              <button class="sev-chip minor" onclick="cycleSev(this)">● Minor</button>
+            </div>
+            <div class="finding-row" data-cat="0" data-idx="1" data-finding="Inconsistent character baseline alignment">
+              <input type="checkbox" onchange="onTick(this)">
+              <span class="finding-text">Inconsistent character baseline alignment</span>
+              <button class="sev-chip minor" onclick="cycleSev(this)">● Minor</button>
+            </div>
+            <div class="finding-row" data-cat="0" data-idx="2" data-finding="Non-uniform letter spacing (kerning anomalies)">
+              <input type="checkbox" onchange="onTick(this)">
+              <span class="finding-text">Non-uniform letter spacing (kerning anomalies)</span>
+              <button class="sev-chip minor" onclick="cycleSev(this)">● Minor</button>
+            </div>
+            <div class="finding-row" data-cat="0" data-idx="3" data-finding="Pixel-level anti-aliasing mismatch between sections">
+              <input type="checkbox" onchange="onTick(this)">
+              <span class="finding-text">Pixel-level anti-aliasing mismatch between sections</span>
+              <button class="sev-chip minor" onclick="cycleSev(this)">● Minor</button>
+            </div>
+            <div class="finding-row" data-cat="0" data-idx="4" data-finding="Resampling or compression artifacts around inserted text">
+              <input type="checkbox" onchange="onTick(this)">
+              <span class="finding-text">Resampling or compression artifacts around inserted text</span>
+              <button class="sev-chip minor" onclick="cycleSev(this)">● Minor</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category 2: Signature -->
+        <div class="cat-card" id="cat-1">
+          <div class="cat-card-header" onclick="toggleCat(1)">
+            <span class="cat-icon">✍️</span>
+            <span class="cat-name">Signature &amp; Handwriting</span>
+            <span class="cat-counter" id="counter-1">0 of 5 ticked</span>
+            <span class="cat-chevron">▼</span>
+          </div>
+          <div class="cat-body" id="catbody-1">
+            <div class="finding-row" data-cat="1" data-idx="0" data-finding="Pen lift inconsistencies compared to reference specimens">
+              <input type="checkbox" onchange="onTick(this)">
+              <span class="finding-text">Pen lift inconsistencies compared to reference specimens</span>
+              <button class="sev-chip minor" onclick="cycleSev(this)">● Minor</button>
+            </div>
+            <div class="finding-row" data-cat="1" data-idx="1" data-finding="Unnatural line quality or tremor suggesting tracing">
+              <input type="checkbox" onchange="onTick(this)">
+              <span class="finding-text">Unnatural line quality or tremor suggesting tracing</span>
+              <button class="sev-chip minor" onclick="cycleSev(this)">● Minor</button>
+            </div>
+            <div class="finding-row" data-cat="1" data-idx="2" data-finding="Proportional anomalies relative to known exemplars">
+              <input type="checkbox" onchange="onTick(this)">
+              <span class="finding-text">Proportional anomalies relative to known exemplars</span>
+              <button class="sev-chip minor" onclick="cycleSev(this)">● Minor</button>
+            </div>
+            <div class="finding-row" data-cat="1" data-idx="3" data-finding="Ink density variation inconsistent with natural writing speed">
+              <input type="checkbox" onchange="onTick(this)">
+              <span class="finding-text">Ink density variation inconsistent with natural writing speed</span>
+              <button class="sev-chip minor" onclick="cycleSev(this)">● Minor</button>
+            </div>
+            <div class="finding-row" data-cat="1" data-idx="4" data-finding="Misalignment of signature relative to document baseline">
+              <input type="checkbox" onchange="onTick(this)">
+              <span class="finding-text">Misalignment of signature relative to document baseline</span>
+              <button class="sev-chip minor" onclick="cycleSev(this)">● Minor</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category 3: Paper (starts collapsed) -->
+        <div class="cat-card collapsed" id="cat-2">
+          <div class="cat-card-header" onclick="toggleCat(2)">
+            <span class="cat-icon">📋</span>
+            <span class="cat-name">Paper &amp; Physical Substrate</span>
+            <span class="cat-counter" id="counter-2">0 of 5 ticked</span>
+            <span class="cat-chevron">▼</span>
+          </div>
+          <div class="cat-body" id="catbody-2">
+            <div class="finding-row" data-cat="2" data-idx="0" data-finding="Watermark absence or misalignment">
+              <input type="checkbox" onchange="onTick(this)">
+              <span class="finding-text">Watermark absence or misalignment</span>
+              <button class="sev-chip minor" onclick="cycleSev(this)">● Minor</button>
+            </div>
+            <div class="finding-row" data-cat="2" data-idx="1" data-finding="Security thread displacement or forgery">
+              <input type="checkbox" onchange="onTick(this)">
+              <span class="finding-text">Security thread displacement or forgery</span>
+              <button class="sev-chip minor" onclick="cycleSev(this)">● Minor</button>
+            </div>
+            <div class="finding-row" data-cat="2" data-idx="2" data-finding="Paper grain direction inconsistency">
+              <input type="checkbox" onchange="onTick(this)">
+              <span class="finding-text">Paper grain direction inconsistency</span>
+              <button class="sev-chip minor" onclick="cycleSev(this)">● Minor</button>
+            </div>
+            <div class="finding-row" data-cat="2" data-idx="3" data-finding="UV-fluorescence anomalies on paper substrate">
+              <input type="checkbox" onchange="onTick(this)">
+              <span class="finding-text">UV-fluorescence anomalies on paper substrate</span>
+              <button class="sev-chip minor" onclick="cycleSev(this)">● Minor</button>
+            </div>
+            <div class="finding-row" data-cat="2" data-idx="4" data-finding="Indentation analysis revealing prior text">
+              <input type="checkbox" onchange="onTick(this)">
+              <span class="finding-text">Indentation analysis revealing prior text</span>
+              <button class="sev-chip minor" onclick="cycleSev(this)">● Minor</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category 4: Ink (starts collapsed) -->
+        <div class="cat-card collapsed" id="cat-3">
+          <div class="cat-card-header" onclick="toggleCat(3)">
+            <span class="cat-icon">🖊️</span>
+            <span class="cat-name">Ink &amp; Writing Media</span>
+            <span class="cat-counter" id="counter-3">0 of 5 ticked</span>
+            <span class="cat-chevron">▼</span>
+          </div>
+          <div class="cat-body" id="catbody-3">
+            <div class="finding-row" data-cat="3" data-idx="0" data-finding="Ink feathering inconsistent with paper stock">
+              <input type="checkbox" onchange="onTick(this)">
+              <span class="finding-text">Ink feathering inconsistent with paper stock</span>
+              <button class="sev-chip minor" onclick="cycleSev(this)">● Minor</button>
+            </div>
+            <div class="finding-row" data-cat="3" data-idx="1" data-finding="Toner adhesion anomalies suggesting photocopier fraud">
+              <input type="checkbox" onchange="onTick(this)">
+              <span class="finding-text">Toner adhesion anomalies suggesting photocopier fraud</span>
+              <button class="sev-chip minor" onclick="cycleSev(this)">● Minor</button>
+            </div>
+            <div class="finding-row" data-cat="3" data-idx="2" data-finding="Chemical erasure residue detected via ESDA or IR">
+              <input type="checkbox" onchange="onTick(this)">
+              <span class="finding-text">Chemical erasure residue detected via ESDA or IR</span>
+              <button class="sev-chip minor" onclick="cycleSev(this)">● Minor</button>
+            </div>
+            <div class="finding-row" data-cat="3" data-idx="3" data-finding="Obliteration or overwriting patterns detected">
+              <input type="checkbox" onchange="onTick(this)">
+              <span class="finding-text">Obliteration or overwriting patterns detected</span>
+              <button class="sev-chip minor" onclick="cycleSev(this)">● Minor</button>
+            </div>
+            <div class="finding-row" data-cat="3" data-idx="4" data-finding="Multiple ink types detected in a single continuous entry">
+              <input type="checkbox" onchange="onTick(this)">
+              <span class="finding-text">Multiple ink types detected in a single continuous entry</span>
+              <button class="sev-chip minor" onclick="cycleSev(this)">● Minor</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category 5: Digital Metadata (starts collapsed) -->
+        <div class="cat-card collapsed" id="cat-4">
+          <div class="cat-card-header" onclick="toggleCat(4)">
+            <span class="cat-icon">💻</span>
+            <span class="cat-name">Digital Metadata</span>
+            <span class="cat-counter" id="counter-4">0 of 5 ticked</span>
+            <span class="cat-chevron">▼</span>
+          </div>
+          <div class="cat-body" id="catbody-4">
+            <div class="finding-row" data-cat="4" data-idx="0" data-finding="Creation or modification timestamp discrepancy">
+              <input type="checkbox" onchange="onTick(this)">
+              <span class="finding-text">Creation or modification timestamp discrepancy</span>
+              <button class="sev-chip minor" onclick="cycleSev(this)">● Minor</button>
+            </div>
+            <div class="finding-row" data-cat="4" data-idx="1" data-finding="Author field inconsistent with stated issuer">
+              <input type="checkbox" onchange="onTick(this)">
+              <span class="finding-text">Author field inconsistent with stated issuer</span>
+              <button class="sev-chip minor" onclick="cycleSev(this)">● Minor</button>
+            </div>
+            <div class="finding-row" data-cat="4" data-idx="2" data-finding="Software version metadata mismatch">
+              <input type="checkbox" onchange="onTick(this)">
+              <span class="finding-text">Software version metadata mismatch</span>
+              <button class="sev-chip minor" onclick="cycleSev(this)">● Minor</button>
+            </div>
+            <div class="finding-row" data-cat="4" data-idx="3" data-finding="Embedded thumbnail does not match document content">
+              <input type="checkbox" onchange="onTick(this)">
+              <span class="finding-text">Embedded thumbnail does not match document content</span>
+              <button class="sev-chip minor" onclick="cycleSev(this)">● Minor</button>
+            </div>
+            <div class="finding-row" data-cat="4" data-idx="4" data-finding="Hash value mismatch or absent digital signature">
+              <input type="checkbox" onchange="onTick(this)">
+              <span class="finding-text">Hash value mismatch or absent digital signature</span>
+              <button class="sev-chip minor" onclick="cycleSev(this)">● Minor</button>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /obs-categories -->
+
+      <!-- RIGHT: live summary -->
+      <div class="obs-summary">
+        <div class="summary-card">
+          <div class="summary-title">📊 Live Summary</div>
+
+          <!-- Semicircle gauge -->
+          <div class="gauge-wrap">
+            <svg class="gauge-svg" width="160" height="90" viewBox="0 0 160 90">
+              <!-- Track: semicircle from 180° to 0°, centre (80,85), r=65 -->
+              <path class="gauge-track"
+                d="M 15 85 A 65 65 0 0 1 145 85"
+                stroke-linecap="round"/>
+              <path class="gauge-fill" id="gaugeFill"
+                d="M 15 85 A 65 65 0 0 1 145 85"
+                stroke="#1d4ed8"
+                stroke-dasharray="204.2"
+                stroke-dashoffset="204.2"
+                stroke-linecap="round"/>
+              <text class="gauge-pct" id="gaugePct" x="80" y="78">0%</text>
+            </svg>
+            <div class="gauge-label" id="gaugeLabel">No findings yet</div>
+          </div>
+
+          <!-- Count + primary type rows -->
+          <div class="sum-rows">
+            <div class="sum-row">
+              <span class="sr-key">Findings</span>
+              <span class="sr-val" id="sumFindings">0</span>
+            </div>
+            <div class="sum-row">
+              <span class="sr-key">Likely type</span>
+              <span class="sr-val" id="sumType">Not determined</span>
+            </div>
+          </div>
+
+          <!-- Per-category bars -->
+          <div class="cat-bars">
+            <div id="catBarFont">
+              <div class="cat-bar-label"><span class="cb-name">Typography</span><span id="pctFont">0%</span></div>
+              <div class="cat-bar-track"><div class="cat-bar-fill" id="barFont" style="width:0%"></div></div>
+            </div>
+            <div id="catBarSig">
+              <div class="cat-bar-label"><span class="cb-name">Signature</span><span id="pctSig">0%</span></div>
+              <div class="cat-bar-track"><div class="cat-bar-fill" id="barSig" style="width:0%"></div></div>
+            </div>
+            <div id="catBarPaper">
+              <div class="cat-bar-label"><span class="cb-name">Paper</span><span id="pctPaper">0%</span></div>
+              <div class="cat-bar-track"><div class="cat-bar-fill" id="barPaper" style="width:0%"></div></div>
+            </div>
+            <div id="catBarInk">
+              <div class="cat-bar-label"><span class="cb-name">Ink &amp; Media</span><span id="pctInk">0%</span></div>
+              <div class="cat-bar-track"><div class="cat-bar-fill" id="barInk" style="width:0%"></div></div>
+            </div>
+            <div id="catBarMeta">
+              <div class="cat-bar-label"><span class="cb-name">Metadata</span><span id="pctMeta">0%</span></div>
+              <div class="cat-bar-track"><div class="cat-bar-fill" id="barMeta" style="width:0%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /obs-summary -->
+
+    </div><!-- /obs-layout -->
+
+    <div class="btn-row space-between" style="margin-top:8px; padding-right:220px;">
+      <button class="btn btn-secondary" onclick="goStep(0)">← Back</button>
+      <button class="btn btn-primary btn-large" onclick="advanceToSubmit()">Analyse findings →</button>
+    </div>
+
+  </div><!-- /page-1 -->
+
+  <!-- ── Page 2: Submit ── -->
   <div class="page" id="page-2">
     <div class="card">
-      <div class="card-title"><span class="icon">✍️</span> Signature / Handwriting Mismatch</div>
-      <span class="standard-pill">SWGMAT / ASTM E2290</span>
-      <p class="card-desc">Record observations about the signature or handwriting — pen lifts, tracing marks, proportional anomalies, ink flow irregularities, comparison with known exemplars.</p>
-      <label for="sig_obs">Observations</label>
-      <textarea id="sig_obs" rows="5" placeholder="e.g. The signature shows signs of tracing — unnatural tremor in pen strokes and inconsistent ink density. Compared with reference exemplars, the loop proportions are significantly different. Pen lift points appear forced and unnatural..."></textarea>
-      <p class="hint">Leave blank if no signature is present on the document.</p>
-    </div>
-    <div class="btn-row">
-      <button class="btn btn-secondary" onclick="goStep(1)">← Back</button>
-      <button class="btn btn-primary" onclick="goStep(3)">Next →</button>
-    </div>
-  </div>
-
-  <!-- ── Page 3: Paper ── -->
-  <div class="page" id="page-3">
-    <div class="card">
-      <div class="card-title"><span class="icon">📋</span> Paper &amp; Substrate Anomalies</div>
-      <span class="standard-pill">ISO/IEC 14443 / ASTM E2289</span>
-      <p class="card-desc">Document physical paper anomalies — missing or misaligned watermarks, security thread issues, paper texture inconsistencies, UV fluorescence anomalies, indentation marks.</p>
-      <label for="paper_obs">Observations</label>
-      <textarea id="paper_obs" rows="5" placeholder="e.g. The watermark is absent from the right-hand quadrant where it should appear. Under UV light, the paper shows fluorescence inconsistent with the standard government issue. The paper grain direction differs between the top and bottom halves..."></textarea>
-      <p class="hint">Physical examination findings including tactile observations are relevant here.</p>
-    </div>
-    <div class="btn-row">
-      <button class="btn btn-secondary" onclick="goStep(2)">← Back</button>
-      <button class="btn btn-primary" onclick="goStep(4)">Next →</button>
-    </div>
-  </div>
-
-  <!-- ── Page 4: Ink ── -->
-  <div class="page" id="page-4">
-    <div class="card">
-      <div class="card-title"><span class="icon">🖊️</span> Ink / Toner Alteration</div>
-      <span class="standard-pill">ASTM E2926 / SWGMAT Ink Standards</span>
-      <p class="card-desc">Note any ink-related anomalies — feathering, chemical erasure, obliteration, overwriting, correction fluid residue, toner adhesion issues, multiple ink types.</p>
-      <label for="ink_obs">Observations</label>
-      <textarea id="ink_obs" rows="5" placeholder="e.g. There is clear evidence of chemical erasure in the date field — residue visible under oblique lighting. The ink in the altered section shows different feathering characteristics compared to adjacent text. ESDA analysis reveals indented writing beneath the surface..."></textarea>
-      <p class="hint">Include observations from ESDA, IR reflectography, or chemical tests if performed.</p>
-    </div>
-    <div class="btn-row">
-      <button class="btn btn-secondary" onclick="goStep(3)">← Back</button>
-      <button class="btn btn-primary" onclick="goStep(5)">Next →</button>
-    </div>
-  </div>
-
-  <!-- ── Page 5: Metadata ── -->
-  <div class="page" id="page-5">
-    <div class="card">
-      <div class="card-title"><span class="icon">💻</span> Digital Metadata Irregularities</div>
-      <span class="standard-pill">ISO 32000 / NIST SP 800-86</span>
-      <p class="card-desc">For digital documents — timestamp discrepancies, author field mismatches, software version anomalies, hash mismatches, absent digital signatures.</p>
-      <label for="meta_obs">Observations</label>
-      <textarea id="meta_obs" rows="5" placeholder="e.g. The PDF metadata shows a creation date of 2023 but the document claims to be issued in 2021. The author field contains a different organization name. The digital signature is absent. Embedded thumbnail does not match the visible document content..."></textarea>
-      <p class="hint">Leave blank for physical-only documents without a digital component.</p>
-    </div>
-    <div class="btn-row">
-      <button class="btn btn-secondary" onclick="goStep(4)">← Back</button>
-      <button class="btn btn-primary" onclick="goStep(6)">Next →</button>
-    </div>
-  </div>
-
-  <!-- ── Page 6: Submit ── -->
-  <div class="page" id="page-6">
-    <div class="card">
       <div class="card-title"><span class="icon">📝</span> Additional Examiner Notes</div>
-      <p class="card-desc">Add any observations not covered in the categories above — case context, chain of custody notes, lab conditions, or any other relevant information.</p>
+      <p class="card-desc">Add any observations not covered above — case context, chain of custody notes, lab conditions, or any other relevant information.</p>
       <label for="examiner_notes">Notes (optional)</label>
       <textarea id="examiner_notes" rows="4" placeholder="e.g. Document submitted by the court on 12/01/2024. Physical examination conducted under controlled lighting at 20°C..."></textarea>
     </div>
     <div id="submitAlert" class="alert alert-warn" style="display:none">
       Please select a document type before submitting.
     </div>
-    <div class="btn-row">
-      <button class="btn btn-secondary" onclick="goStep(5)">← Back</button>
+    <div class="btn-row space-between">
+      <button class="btn btn-secondary" onclick="goStep(1)">← Back</button>
       <button class="btn btn-primary btn-large" id="submitBtn" onclick="submitForm()">
         <span class="spinner"></span>
         <span class="btn-text">🔍 Run Forensic Analysis</span>
@@ -659,15 +963,19 @@
     </div>
   </div>
 
-</div>
+</div><!-- /container -->
 
 <script>
+  // ─────────────────────────────────────────────────────────────────────────
+  // Step navigation (3 steps now)
+  // ─────────────────────────────────────────────────────────────────────────
   let currentStep = 0;
-  const TOTAL_STEPS = 7;
+  const TOTAL_STEPS = 3; // 0, 1, 2
   let lastReport = "";
 
   function goStep(n) {
-    document.getElementById('page-' + currentStep).classList.remove('active');
+    const curPage = document.getElementById('page-' + currentStep);
+    if (curPage) curPage.classList.remove('active');
     document.querySelectorAll('.step-btn')[currentStep].classList.remove('active');
     if (n > currentStep) {
       document.querySelectorAll('.step-btn')[currentStep].classList.add('done');
@@ -678,6 +986,172 @@
     document.querySelectorAll('.step-btn')[n].classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // Observations page state
+  // ─────────────────────────────────────────────────────────────────────────
+
+  // Category names for the summary "likely type" display
+  const CAT_NAMES = [
+    'Typography & Text',
+    'Signature & Handwriting',
+    'Paper & Physical',
+    'Ink & Writing Media',
+    'Digital Metadata',
+  ];
+
+  // Severity weights: minor=0.3, moderate=0.6, strong=1.0
+  const SEV_WEIGHTS = { minor: 0.30, moderate: 0.60, strong: 1.00 };
+  const SEV_CYCLE   = ['minor', 'moderate', 'strong'];
+  const SEV_LABELS  = { minor: '● Minor', moderate: '● Moderate', strong: '● Strong' };
+
+  // Gauge arc length (semicircle r=65 → π*65 ≈ 204.2)
+  const GAUGE_CIRC = 204.2;
+
+  function onTick(cb) {
+    const row = cb.closest('.finding-row');
+    row.classList.toggle('ticked', cb.checked);
+    updateSummary();
+    updateCounters();
+  }
+
+  function cycleSev(btn) {
+    const cur = SEV_CYCLE.findIndex(s => btn.classList.contains(s));
+    const next = SEV_CYCLE[(cur + 1) % SEV_CYCLE.length];
+    SEV_CYCLE.forEach(s => btn.classList.remove(s));
+    btn.classList.add(next);
+    btn.textContent = SEV_LABELS[next];
+    updateSummary();
+  }
+
+  function toggleCat(idx) {
+    document.getElementById('cat-' + idx).classList.toggle('collapsed');
+  }
+
+  function updateCounters() {
+    for (let c = 0; c < 5; c++) {
+      const rows  = document.querySelectorAll(`.finding-row[data-cat="${c}"]`);
+      const ticked = [...rows].filter(r => r.classList.contains('ticked')).length;
+      const el = document.getElementById('counter-' + c);
+      el.textContent = `${ticked} of ${rows.length} ticked`;
+      el.classList.toggle('has-ticked', ticked > 0);
+    }
+  }
+
+  function catScore(catIdx) {
+    // Score a category: average severity weight of ticked items, scaled to 0-1
+    const rows = [...document.querySelectorAll(`.finding-row[data-cat="${catIdx}"]`)];
+    const total = rows.length;
+    if (!total) return 0;
+    let weightSum = 0;
+    let tickedCount = 0;
+    rows.forEach(row => {
+      if (!row.classList.contains('ticked')) return;
+      tickedCount++;
+      const chip = row.querySelector('.sev-chip');
+      const sev = SEV_CYCLE.find(s => chip.classList.contains(s)) || 'minor';
+      weightSum += SEV_WEIGHTS[sev];
+    });
+    if (!tickedCount) return 0;
+    // Density: (tickedCount/total) * avgSeverity
+    return (tickedCount / total) * (weightSum / tickedCount);
+  }
+
+  function updateSummary() {
+    const scores = [0,1,2,3,4].map(catScore);
+    const totalTicked = [...document.querySelectorAll('.finding-row.ticked')].length;
+
+    // Overall: weighted average (top cat 40%, rest 60%)
+    let overall = 0;
+    if (totalTicked > 0) {
+      const sorted = [...scores].sort((a,b) => b - a);
+      if (sorted.length === 1 || sorted[0] === 0) {
+        overall = sorted[0];
+      } else {
+        const rest = sorted.slice(1);
+        const restAvg = rest.reduce((s,x) => s+x, 0) / rest.length;
+        overall = sorted[0] * 0.40 + restAvg * 0.60;
+      }
+      overall = Math.min(overall, 1.0);
+    }
+
+    const pct = Math.round(overall * 100);
+
+    // Gauge
+    const offset = GAUGE_CIRC * (1 - overall);
+    const fill = document.getElementById('gaugeFill');
+    fill.style.strokeDashoffset = offset;
+    // Colour: danger ≥70, warn ≥40, accent otherwise
+    fill.style.stroke = pct >= 70 ? '#dc2626' : pct >= 40 ? '#d97706' : '#1d4ed8';
+
+    document.getElementById('gaugePct').textContent = pct + '%';
+
+    // Label
+    let label = 'No findings yet';
+    if (totalTicked > 0) {
+      if (pct >= 70) label = 'High confidence of forgery';
+      else if (pct >= 40) label = 'Moderate confidence of forgery';
+      else label = 'Low confidence of forgery';
+    }
+    document.getElementById('gaugeLabel').textContent = label;
+
+    // Counts + type
+    document.getElementById('sumFindings').textContent = totalTicked;
+    const maxIdx = scores.indexOf(Math.max(...scores));
+    document.getElementById('sumType').textContent =
+      totalTicked > 0 && scores[maxIdx] > 0 ? CAT_NAMES[maxIdx] : 'Not determined';
+
+    // Per-category bars
+    const barIds  = ['barFont','barSig','barPaper','barInk','barMeta'];
+    const pctIds  = ['pctFont','pctSig','pctPaper','pctInk','pctMeta'];
+    scores.forEach((s, i) => {
+      const p = Math.round(s * 100);
+      const bar = document.getElementById(barIds[i]);
+      bar.style.width = p + '%';
+      bar.style.background = p >= 70 ? '#dc2626' : p >= 40 ? '#d97706' : p > 0 ? '#1d4ed8' : '#e5e7eb';
+      document.getElementById(pctIds[i]).textContent = p + '%';
+    });
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // Build observation text from ticked findings → hidden textareas → submit
+  // ─────────────────────────────────────────────────────────────────────────
+
+  // Map cat index → textarea id
+  const CAT_FIELD_MAP = ['font_obs', 'sig_obs', 'paper_obs', 'ink_obs', 'meta_obs'];
+
+  function buildObservationText(catIdx) {
+    const rows = [...document.querySelectorAll(`.finding-row[data-cat="${catIdx}"].ticked`)];
+    if (!rows.length) return '';
+    return rows.map(row => {
+      const finding = row.dataset.finding;
+      const chip = row.querySelector('.sev-chip');
+      const sev = SEV_CYCLE.find(s => chip.classList.contains(s)) || 'minor';
+      // Produce a natural sentence the analyzer can score
+      const sevWord = sev === 'strong' ? 'clear' : sev === 'moderate' ? 'significant' : 'slight';
+      return `${sevWord} ${finding.toLowerCase()}.`;
+    }).join(' ');
+  }
+
+  function advanceToSubmit() {
+    // Write built observations into the hidden fields the submitForm() reads
+    CAT_FIELD_MAP.forEach((fieldId, catIdx) => {
+      let el = document.getElementById(fieldId);
+      if (!el) {
+        // Create hidden textarea if it doesn't exist yet
+        el = document.createElement('textarea');
+        el.id = fieldId;
+        el.style.display = 'none';
+        document.body.appendChild(el);
+      }
+      el.value = buildObservationText(catIdx);
+    });
+    goStep(2);
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // Submit
+  // ─────────────────────────────────────────────────────────────────────────
 
   async function submitForm() {
     const docType = document.getElementById('doc_type').value;
@@ -691,14 +1165,26 @@
     btn.disabled = true;
     btn.classList.add('loading');
 
+    // Ensure fields are populated (in case user jumped straight here)
+    CAT_FIELD_MAP.forEach((fieldId, catIdx) => {
+      let el = document.getElementById(fieldId);
+      if (!el) {
+        el = document.createElement('textarea');
+        el.id = fieldId;
+        el.style.display = 'none';
+        document.body.appendChild(el);
+      }
+      if (!el.value) el.value = buildObservationText(catIdx);
+    });
+
     const payload = {
-      document_type: docType,
-      examiner_name: document.getElementById('examiner_name').value,
-      font_obs: document.getElementById('font_obs').value,
-      signature_obs: document.getElementById('sig_obs').value,
-      paper_obs: document.getElementById('paper_obs').value,
-      ink_obs: document.getElementById('ink_obs').value,
-      metadata_obs: document.getElementById('meta_obs').value,
+      document_type:  docType,
+      examiner_name:  document.getElementById('examiner_name').value,
+      font_obs:       document.getElementById('font_obs').value,
+      signature_obs:  document.getElementById('sig_obs').value,
+      paper_obs:      document.getElementById('paper_obs').value,
+      ink_obs:        document.getElementById('ink_obs').value,
+      metadata_obs:   document.getElementById('meta_obs').value,
       examiner_notes: document.getElementById('examiner_notes').value,
     };
 
@@ -710,6 +1196,7 @@
       });
       const data = await resp.json();
       renderResults(data);
+      loadHistory();
     } catch (e) {
       alert('Analysis failed. Make sure the Flask server is running.');
     } finally {
@@ -718,38 +1205,34 @@
     }
   }
 
+  // ─────────────────────────────────────────────────────────────────────────
+  // Render results
+  // ─────────────────────────────────────────────────────────────────────────
+
   function renderResults(data) {
-    // Hide all step pages, show results
-    for (let i = 0; i <= TOTAL_STEPS; i++) {
+    for (let i = 0; i < TOTAL_STEPS; i++) {
       const p = document.getElementById('page-' + i);
       if (p) p.classList.remove('active');
     }
-    document.querySelectorAll('.step-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.step-btn').forEach(b => b.classList.remove('active', 'done'));
     document.getElementById('page-results').classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    // Verdict banner
     const pct = Math.round(data.overall_confidence * 100);
     const verdict = data.verdict;
     const banner = document.getElementById('verdictBanner');
-    const icon = document.getElementById('verdictIcon');
-    const text = document.getElementById('verdictText');
-    const sub = document.getElementById('verdictSub');
+    const icon   = document.getElementById('verdictIcon');
+    const text   = document.getElementById('verdictText');
+    const sub    = document.getElementById('verdictSub');
 
     banner.className = 'verdict-banner';
-    if (verdict.includes('Confirmed')) {
-      banner.classList.add('confirmed'); icon.textContent = '🚨';
-    } else if (verdict.includes('Suspected')) {
-      banner.classList.add('suspected'); icon.textContent = '⚠️';
-    } else if (verdict.includes('Inconclusive')) {
-      banner.classList.add('inconclusive'); icon.textContent = '🔍';
-    } else {
-      banner.classList.add('genuine'); icon.textContent = '✅';
-    }
+    if      (verdict.includes('Confirmed'))   { banner.classList.add('confirmed');   icon.textContent = '🚨'; }
+    else if (verdict.includes('Suspected'))   { banner.classList.add('suspected');   icon.textContent = '⚠️'; }
+    else if (verdict.includes('Inconclusive')){ banner.classList.add('inconclusive');icon.textContent = '🔍'; }
+    else                                      { banner.classList.add('genuine');     icon.textContent = '✅'; }
     text.textContent = verdict;
-    sub.textContent = data.document_type + ' · Primary anomaly: ' + data.primary_anomaly;
+    sub.textContent  = data.document_type + ' · Primary anomaly: ' + data.primary_anomaly;
 
-    // Confidence bar
     const bar = document.getElementById('confBar');
     bar.style.width = pct + '%';
     bar.className = 'bar-fill';
@@ -758,19 +1241,17 @@
     else bar.classList.add('low');
     document.getElementById('confPct').textContent = pct + '%  (' + data.overall_confidence_label + ')';
 
-    // Findings
     const container = document.getElementById('findingsContainer');
     container.innerHTML = '';
     data.findings.forEach((f, idx) => {
-      const confPct = Math.round(f.confidence * 100);
+      const confPct    = Math.round(f.confidence * 100);
       const badgeClass = f.confidence_label.toLowerCase().replace(' ', '-');
-      const kws = f.matched_keywords.slice(0, 6).map(k => `<span class="kw-pill">${k}</span>`).join('');
+      const kws        = f.matched_keywords.slice(0, 6).map(k => `<span class="kw-pill">${k}</span>`).join('');
       const indicators = f.relevant_indicators.map(i => `<li>${i}</li>`).join('');
-
       container.innerHTML += `
         <div class="finding-card">
           <div class="finding-header" onclick="toggleFinding(${idx})">
-            <span class="badge ${badgeClass}">${f.confidence_label} — ${confPct}%</span>
+            <span class="fc-badge ${badgeClass}">${f.confidence_label} — ${confPct}%</span>
             <span class="title">${f.label}</span>
             <span class="chevron" id="chev-${idx}">▼</span>
           </div>
@@ -786,7 +1267,6 @@
         </div>`;
     });
 
-    // Report
     lastReport = data.report;
     document.getElementById('reportBox').textContent = data.report;
   }
@@ -819,18 +1299,20 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // ── History ──────────────────────────────────────────────────────────────
+  // ─────────────────────────────────────────────────────────────────────────
+  // History
+  // ─────────────────────────────────────────────────────────────────────────
 
   async function loadHistory() {
     try {
-      const resp = await fetch('/history');
+      const resp  = await fetch('/history');
       const items = await resp.json();
       renderHistoryList(items);
     } catch (_) {}
   }
 
   function renderHistoryList(items) {
-    const list = document.getElementById('histList');
+    const list  = document.getElementById('histList');
     const count = document.getElementById('histCount');
     count.textContent = items.length;
 
@@ -840,11 +1322,11 @@
     }
 
     list.innerHTML = items.map((e, i) => {
-      const pct = Math.round(e.overall_confidence * 100);
+      const pct      = Math.round(e.overall_confidence * 100);
       const barClass = pct >= 70 ? 'high' : pct >= 40 ? 'moderate' : 'low';
-      const dt = new Date(e.timestamp);
-      const timeStr = dt.toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' })
-                    + ' ' + dt.toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' });
+      const dt       = new Date(e.timestamp);
+      const timeStr  = dt.toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' })
+                     + ' ' + dt.toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' });
       const verdictShort = e.verdict.length > 38 ? e.verdict.slice(0, 38) + '…' : e.verdict;
       return `
         <div class="hist-item" onclick="openHistoryEntry(${i})">
@@ -858,7 +1340,6 @@
         </div>`;
     }).join('');
 
-    // store for click access
     window._histItems = items;
   }
 
@@ -891,8 +1372,10 @@
     loadHistory();
   }
 
-  // Load count on page load
+  // Init
   loadHistory();
+  updateSummary();
+  updateCounters();
 </script>
 </body>
 </html>

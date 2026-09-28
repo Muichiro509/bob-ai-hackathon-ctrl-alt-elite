@@ -1,0 +1,224 @@
+[
+  {
+    "id": "FDE-20260928-141610",
+    "timestamp": "2026-09-28T14:16:10",
+    "examiner_name": "nikunj",
+    "document_type": "COVID Vaccination Certificate",
+    "overall_confidence": 0.512,
+    "overall_confidence_label": "Moderate",
+    "verdict": "Suspected Forgery",
+    "anomaly_count": 2,
+    "primary_anomaly": "Signature / Handwriting Mismatch",
+    "findings": [
+      {
+        "category": "font_inconsistency",
+        "label": "Font & Typography Inconsistency",
+        "confidence": 0.454,
+        "confidence_label": "Moderate",
+        "matched_keywords": [
+          "spacing",
+          "kerning"
+        ],
+        "standard": "ASTM E2285 / OSAC FDE Standard",
+        "standard_description": "Examination of typefaces, font metrics, and typographic consistency",
+        "relevant_indicators": [
+          "Mixed font families within a single typed field",
+          "Inconsistent character baseline alignment",
+          "Non-uniform letter spacing (kerning anomalies)"
+        ],
+        "raw_observation": "slight non-uniform letter spacing (kerning anomalies)."
+      },
+      {
+        "category": "signature_mismatch",
+        "label": "Signature / Handwriting Mismatch",
+        "confidence": 0.736,
+        "confidence_label": "High",
+        "matched_keywords": [
+          "tremor",
+          "tracing",
+          "line quality"
+        ],
+        "standard": "SWGMAT / ASTM E2290",
+        "standard_description": "Questioned document examination of signatures and handwriting",
+        "relevant_indicators": [
+          "Pen lift inconsistencies compared to reference specimens",
+          "Unnatural line quality or tremor suggesting tracing",
+          "Proportional anomalies relative to known exemplars"
+        ],
+        "raw_observation": "slight unnatural line quality or tremor suggesting tracing."
+      },
+      {
+        "category": "digital_metadata",
+        "label": "Digital Metadata Irregularity",
+        "confidence": 0.27,
+        "confidence_label": "Low",
+        "matched_keywords": [
+          "author"
+        ],
+        "standard": "ISO 32000 / NIST SP 800-86 (Digital Forensics)",
+        "standard_description": "Digital metadata and file integrity analysis",
+        "relevant_indicators": [
+          "Creation/modification timestamp discrepancy",
+          "Author field inconsistent with stated issuer",
+          "Software version metadata mismatch"
+        ],
+        "raw_observation": "slight author field inconsistent with stated issuer."
+      }
+    ],
+    "report": "========================================================================\n              FORENSIC DOCUMENT EXAMINATION REPORT\n           AI-Assisted Analysis — For Official Use Only\n========================================================================\n\n  Report Reference   : FDE-20260928-141610\n  Date of Examination: 28 September 2026\n  Time               : 14:16 hrs\n  Prepared By        : nikunj\n  Document Type      : COVID Vaccination Certificate\n\n========================================================================\n  SECTION 1 — EXECUTIVE SUMMARY\n========================================================================\n\n  Overall Forgery Confidence : Moderate\n                               (51%)\n  Examination Verdict        : Suspected Forgery\n  Total Anomaly Categories   : 3\n  Significant Anomalies      : 2\n  Primary Anomaly Type       : Signature / Handwriting Mismatch\n\n========================================================================\n  SECTION 2 — EXPERT OPINION\n========================================================================\n\nForensic examination of the 'COVID Vaccination Certificate' has\nrevealed 2 anomalies warranting further investigation. A Moderate\nconfidence level (51%) has been assigned, indicating the document\ndisplays features inconsistent with an authentic specimen.\n\nThe examination yields a finding of 'Suspected Forgery'. Additional\nphysical or digital examination is recommended before a definitive\nconclusion is submitted to legal proceedings.\n\n========================================================================\n  SECTION 3 — DETAILED FINDINGS\n========================================================================\n\n  [1] Font & Typography Inconsistency\n      Confidence  : Moderate (45%)  [█████░░░░░]\n      Standard    : ASTM E2285 / OSAC FDE Standard\n      Scope       : Examination of typefaces, font metrics, and typographic consistency\n\n      Observation recorded:\n        slight non-uniform letter spacing (kerning anomalies).\n\n      Forensic markers identified: spacing, kerning\n\n      Applicable examination indicators:\n        • Mixed font families within a single typed field\n        • Inconsistent character baseline alignment\n        • Non-uniform letter spacing (kerning anomalies)\n\n------------------------------------------------------------------------\n\n  [2] Signature / Handwriting Mismatch\n      Confidence  : High (73%)  [███████░░░]\n      Standard    : SWGMAT / ASTM E2290\n      Scope       : Questioned document examination of signatures and handwriting\n\n      Observation recorded:\n        slight unnatural line quality or tremor suggesting tracing.\n\n      Forensic markers identified: tremor, tracing, line quality\n\n      Applicable examination indicators:\n        • Pen lift inconsistencies compared to reference specimens\n        • Unnatural line quality or tremor suggesting tracing\n        • Proportional anomalies relative to known exemplars\n\n------------------------------------------------------------------------\n\n  [3] Digital Metadata Irregularity\n      Confidence  : Low (27%)  [███░░░░░░░]\n      Standard    : ISO 32000 / NIST SP 800-86 (Digital Forensics)\n      Scope       : Digital metadata and file integrity analysis\n\n      Observation recorded:\n        slight author field inconsistent with stated issuer.\n\n      Forensic markers identified: author\n\n      Applicable examination indicators:\n        • Creation/modification timestamp discrepancy\n        • Author field inconsistent with stated issuer\n        • Software version metadata mismatch\n\n------------------------------------------------------------------------\n\n========================================================================\n  SECTION 4 — EXAMINATION STANDARDS APPLIED\n========================================================================\n\n  • ASTM E2285 / OSAC FDE Standard\n    Examination of typefaces, font metrics, and typographic consistency\n\n  • SWGMAT / ASTM E2290\n    Questioned document examination of signatures and handwriting\n\n  • ISO 32000 / NIST SP 800-86 (Digital Forensics)\n    Digital metadata and file integrity analysis\n\n========================================================================\n  DISCLAIMER\n========================================================================\n\n  This report is generated by an AI-assisted forensic analysis system.\n  Findings are based on structured observations entered by the examiner.\n  This report is intended to assist — not replace — a qualified Forensic\n  Document Examiner (FDE). All conclusions must be independently verified\n  by a certified expert before use in legal proceedings.\n\n  The analysis applies rule-based scoring aligned with internationally\n  recognised examination standards (ASTM, SWGMAT, ISO, NIST).\n\n========================================================================\n  END OF REPORT  |  FDE-20260928-141610\n========================================================================"
+  },
+  {
+    "id": "FDE-20260928-141340",
+    "timestamp": "2026-09-28T14:13:40",
+    "examiner_name": "nikunj",
+    "document_type": "COVID Vaccination Certificate",
+    "overall_confidence": 0.512,
+    "overall_confidence_label": "Moderate",
+    "verdict": "Suspected Forgery",
+    "anomaly_count": 2,
+    "primary_anomaly": "Signature / Handwriting Mismatch",
+    "findings": [
+      {
+        "category": "font_inconsistency",
+        "label": "Font & Typography Inconsistency",
+        "confidence": 0.454,
+        "confidence_label": "Moderate",
+        "matched_keywords": [
+          "spacing",
+          "kerning"
+        ],
+        "standard": "ASTM E2285 / OSAC FDE Standard",
+        "standard_description": "Examination of typefaces, font metrics, and typographic consistency",
+        "relevant_indicators": [
+          "Mixed font families within a single typed field",
+          "Inconsistent character baseline alignment",
+          "Non-uniform letter spacing (kerning anomalies)"
+        ],
+        "raw_observation": "slight non-uniform letter spacing (kerning anomalies)."
+      },
+      {
+        "category": "signature_mismatch",
+        "label": "Signature / Handwriting Mismatch",
+        "confidence": 0.736,
+        "confidence_label": "High",
+        "matched_keywords": [
+          "tremor",
+          "tracing",
+          "line quality"
+        ],
+        "standard": "SWGMAT / ASTM E2290",
+        "standard_description": "Questioned document examination of signatures and handwriting",
+        "relevant_indicators": [
+          "Pen lift inconsistencies compared to reference specimens",
+          "Unnatural line quality or tremor suggesting tracing",
+          "Proportional anomalies relative to known exemplars"
+        ],
+        "raw_observation": "slight unnatural line quality or tremor suggesting tracing."
+      },
+      {
+        "category": "digital_metadata",
+        "label": "Digital Metadata Irregularity",
+        "confidence": 0.27,
+        "confidence_label": "Low",
+        "matched_keywords": [
+          "author"
+        ],
+        "standard": "ISO 32000 / NIST SP 800-86 (Digital Forensics)",
+        "standard_description": "Digital metadata and file integrity analysis",
+        "relevant_indicators": [
+          "Creation/modification timestamp discrepancy",
+          "Author field inconsistent with stated issuer",
+          "Software version metadata mismatch"
+        ],
+        "raw_observation": "slight author field inconsistent with stated issuer."
+      }
+    ],
+    "report": "========================================================================\n              FORENSIC DOCUMENT EXAMINATION REPORT\n           AI-Assisted Analysis — For Official Use Only\n========================================================================\n\n  Report Reference   : FDE-20260928-141340\n  Date of Examination: 28 September 2026\n  Time               : 14:13 hrs\n  Prepared By        : nikunj\n  Document Type      : COVID Vaccination Certificate\n\n========================================================================\n  SECTION 1 — EXECUTIVE SUMMARY\n========================================================================\n\n  Overall Forgery Confidence : Moderate\n                               (51%)\n  Examination Verdict        : Suspected Forgery\n  Total Anomaly Categories   : 3\n  Significant Anomalies      : 2\n  Primary Anomaly Type       : Signature / Handwriting Mismatch\n\n========================================================================\n  SECTION 2 — EXPERT OPINION\n========================================================================\n\nForensic examination of the 'COVID Vaccination Certificate' has\nrevealed 2 anomalies warranting further investigation. A Moderate\nconfidence level (51%) has been assigned, indicating the document\ndisplays features inconsistent with an authentic specimen.\n\nThe examination yields a finding of 'Suspected Forgery'. Additional\nphysical or digital examination is recommended before a definitive\nconclusion is submitted to legal proceedings.\n\n========================================================================\n  SECTION 3 — DETAILED FINDINGS\n========================================================================\n\n  [1] Font & Typography Inconsistency\n      Confidence  : Moderate (45%)  [█████░░░░░]\n      Standard    : ASTM E2285 / OSAC FDE Standard\n      Scope       : Examination of typefaces, font metrics, and typographic consistency\n\n      Observation recorded:\n        slight non-uniform letter spacing (kerning anomalies).\n\n      Forensic markers identified: spacing, kerning\n\n      Applicable examination indicators:\n        • Mixed font families within a single typed field\n        • Inconsistent character baseline alignment\n        • Non-uniform letter spacing (kerning anomalies)\n\n------------------------------------------------------------------------\n\n  [2] Signature / Handwriting Mismatch\n      Confidence  : High (73%)  [███████░░░]\n      Standard    : SWGMAT / ASTM E2290\n      Scope       : Questioned document examination of signatures and handwriting\n\n      Observation recorded:\n        slight unnatural line quality or tremor suggesting tracing.\n\n      Forensic markers identified: tremor, tracing, line quality\n\n      Applicable examination indicators:\n        • Pen lift inconsistencies compared to reference specimens\n        • Unnatural line quality or tremor suggesting tracing\n        • Proportional anomalies relative to known exemplars\n\n------------------------------------------------------------------------\n\n  [3] Digital Metadata Irregularity\n      Confidence  : Low (27%)  [███░░░░░░░]\n      Standard    : ISO 32000 / NIST SP 800-86 (Digital Forensics)\n      Scope       : Digital metadata and file integrity analysis\n\n      Observation recorded:\n        slight author field inconsistent with stated issuer.\n\n      Forensic markers identified: author\n\n      Applicable examination indicators:\n        • Creation/modification timestamp discrepancy\n        • Author field inconsistent with stated issuer\n        • Software version metadata mismatch\n\n------------------------------------------------------------------------\n\n========================================================================\n  SECTION 4 — EXAMINATION STANDARDS APPLIED\n========================================================================\n\n  • ASTM E2285 / OSAC FDE Standard\n    Examination of typefaces, font metrics, and typographic consistency\n\n  • SWGMAT / ASTM E2290\n    Questioned document examination of signatures and handwriting\n\n  • ISO 32000 / NIST SP 800-86 (Digital Forensics)\n    Digital metadata and file integrity analysis\n\n========================================================================\n  DISCLAIMER\n========================================================================\n\n  This report is generated by an AI-assisted forensic analysis system.\n  Findings are based on structured observations entered by the examiner.\n  This report is intended to assist — not replace — a qualified Forensic\n  Document Examiner (FDE). All conclusions must be independently verified\n  by a certified expert before use in legal proceedings.\n\n  The analysis applies rule-based scoring aligned with internationally\n  recognised examination standards (ASTM, SWGMAT, ISO, NIST).\n\n========================================================================\n  END OF REPORT  |  FDE-20260928-141340\n========================================================================"
+  },
+  {
+    "id": "FDE-20260928-141253",
+    "timestamp": "2026-09-28T14:12:53",
+    "examiner_name": "Devang Sorathiya",
+    "document_type": "COVID Vaccination Certificate",
+    "overall_confidence": 0.637,
+    "overall_confidence_label": "High",
+    "verdict": "Suspected Forgery",
+    "anomaly_count": 2,
+    "primary_anomaly": "Paper & Substrate Anomaly",
+    "findings": [
+      {
+        "category": "font_inconsistency",
+        "label": "Font & Typography Inconsistency",
+        "confidence": 0.262,
+        "confidence_label": "Low",
+        "matched_keywords": [
+          "font"
+        ],
+        "standard": "ASTM E2285 / OSAC FDE Standard",
+        "standard_description": "Examination of typefaces, font metrics, and typographic consistency",
+        "relevant_indicators": [
+          "Mixed font families within a single typed field",
+          "Inconsistent character baseline alignment",
+          "Non-uniform letter spacing (kerning anomalies)"
+        ],
+        "raw_observation": "slight mixed font families within a single typed field."
+      },
+      {
+        "category": "paper_anomaly",
+        "label": "Paper & Substrate Anomaly",
+        "confidence": 0.951,
+        "confidence_label": "Very High",
+        "matched_keywords": [
+          "paper",
+          "substrate",
+          "uv",
+          "fluorescence"
+        ],
+        "standard": "ISO/IEC 14443 / ASTM E2289",
+        "standard_description": "Physical substrate and paper examination",
+        "relevant_indicators": [
+          "Paper grain direction inconsistency",
+          "UV-fluorescence anomalies"
+        ],
+        "raw_observation": "slight uv-fluorescence anomalies on paper substrate."
+      },
+      {
+        "category": "ink_spread",
+        "label": "Ink / Toner Alteration",
+        "confidence": 0.27,
+        "confidence_label": "Low",
+        "matched_keywords": [
+          "toner"
+        ],
+        "standard": "ASTM E2926 / SWGMAT Ink Standards",
+        "standard_description": "Ink and toner analysis for alteration detection",
+        "relevant_indicators": [
+          "Ink feathering inconsistent with paper stock",
+          "Toner adhesion anomalies suggesting photocopier fraud",
+          "Chemical erasure residue detected via ESDA or IR"
+        ],
+        "raw_observation": "slight toner adhesion anomalies suggesting photocopier fraud."
+      },
+      {
+        "category": "digital_metadata",
+        "label": "Digital Metadata Irregularity",
+        "confidence": 0.75,
+        "confidence_label": "Very High",
+        "matched_keywords": [
+          "metadata",
+          "software",
+          "version"
+        ],
+        "standard": "ISO 32000 / NIST SP 800-86 (Digital Forensics)",
+        "standard_description": "Digital metadata and file integrity analysis",
+        "relevant_indicators": [
+          "Creation/modification timestamp discrepancy",
+          "Author field inconsistent with stated issuer",
+          "Software version metadata mismatch"
+        ],
+        "raw_observation": "slight software version metadata mismatch."
+      }
+    ],
+    "report": "========================================================================\n              FORENSIC DOCUMENT EXAMINATION REPORT\n           AI-Assisted Analysis — For Official Use Only\n========================================================================\n\n  Report Reference   : FDE-20260928-141253\n  Date of Examination: 28 September 2026\n  Time               : 14:12 hrs\n  Prepared By        : Devang Sorathiya\n  Document Type      : COVID Vaccination Certificate\n\n========================================================================\n  SECTION 1 — EXECUTIVE SUMMARY\n========================================================================\n\n  Overall Forgery Confidence : High\n                               (63%)\n  Examination Verdict        : Suspected Forgery\n  Total Anomaly Categories   : 4\n  Significant Anomalies      : 2\n  Primary Anomaly Type       : Paper & Substrate Anomaly\n\n========================================================================\n  SECTION 2 — EXPERT OPINION\n========================================================================\n\nForensic examination of the 'COVID Vaccination Certificate' has\nrevealed 2 anomalies warranting further investigation. A High\nconfidence level (63%) has been assigned, indicating the document\ndisplays features inconsistent with an authentic specimen.\n\nThe examination yields a finding of 'Suspected Forgery'. Additional\nphysical or digital examination is recommended before a definitive\nconclusion is submitted to legal proceedings.\n\n========================================================================\n  SECTION 3 — DETAILED FINDINGS\n========================================================================\n\n  [1] Font & Typography Inconsistency\n      Confidence  : Low (26%)  [███░░░░░░░]\n      Standard    : ASTM E2285 / OSAC FDE Standard\n      Scope       : Examination of typefaces, font metrics, and typographic consistency\n\n      Observation recorded:\n        slight mixed font families within a single typed field.\n\n      Forensic markers identified: font\n\n      Applicable examination indicators:\n        • Mixed font families within a single typed field\n        • Inconsistent character baseline alignment\n        • Non-uniform letter spacing (kerning anomalies)\n\n------------------------------------------------------------------------\n\n  [2] Paper & Substrate Anomaly\n      Confidence  : Very High (95%)  [██████████]\n      Standard    : ISO/IEC 14443 / ASTM E2289\n      Scope       : Physical substrate and paper examination\n\n      Observation recorded:\n        slight uv-fluorescence anomalies on paper substrate.\n\n      Forensic markers identified: paper, substrate, uv, fluorescence\n\n      Applicable examination indicators:\n        • Paper grain direction inconsistency\n        • UV-fluorescence anomalies\n\n------------------------------------------------------------------------\n\n  [3] Ink / Toner Alteration\n      Confidence  : Low (27%)  [███░░░░░░░]\n      Standard    : ASTM E2926 / SWGMAT Ink Standards\n      Scope       : Ink and toner analysis for alteration detection\n\n      Observation recorded:\n        slight toner adhesion anomalies suggesting photocopier\n        fraud.\n\n      Forensic markers identified: toner\n\n      Applicable examination indicators:\n        • Ink feathering inconsistent with paper stock\n        • Toner adhesion anomalies suggesting photocopier fraud\n        • Chemical erasure residue detected via ESDA or IR\n\n------------------------------------------------------------------------\n\n  [4] Digital Metadata Irregularity\n      Confidence  : Very High (75%)  [████████░░]\n      Standard    : ISO 32000 / NIST SP 800-86 (Digital Forensics)\n      Scope       : Digital metadata and file integrity analysis\n\n      Observation recorded:\n        slight software version metadata mismatch.\n\n      Forensic markers identified: metadata, software, version\n\n      Applicable examination indicators:\n        • Creation/modification timestamp discrepancy\n        • Author field inconsistent with stated issuer\n        • Software version metadata mismatch\n\n------------------------------------------------------------------------\n\n========================================================================\n  SECTION 4 — EXAMINATION STANDARDS APPLIED\n========================================================================\n\n  • ASTM E2285 / OSAC FDE Standard\n    Examination of typefaces, font metrics, and typographic consistency\n\n  • ISO/IEC 14443 / ASTM E2289\n    Physical substrate and paper examination\n\n  • ASTM E2926 / SWGMAT Ink Standards\n    Ink and toner analysis for alteration detection\n\n  • ISO 32000 / NIST SP 800-86 (Digital Forensics)\n    Digital metadata and file integrity analysis\n\n========================================================================\n  DISCLAIMER\n========================================================================\n\n  This report is generated by an AI-assisted forensic analysis system.\n  Findings are based on structured observations entered by the examiner.\n  This report is intended to assist — not replace — a qualified Forensic\n  Document Examiner (FDE). All conclusions must be independently verified\n  by a certified expert before use in legal proceedings.\n\n  The analysis applies rule-based scoring aligned with internationally\n  recognised examination standards (ASTM, SWGMAT, ISO, NIST).\n\n========================================================================\n  END OF REPORT  |  FDE-20260928-141253\n========================================================================"
+  }
+]
