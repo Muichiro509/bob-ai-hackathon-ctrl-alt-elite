@@ -29,11 +29,14 @@ We built a guided forensic examination workflow where an FDE inputs structured o
 
 ## ✨ Key Features
 
-- **Guided 7-step examination workflow** covering all five forensic observation categories
+- **3-step guided examination workflow** — Document Info → Observations → Submit & Report
+- **Checkbox-based observations screen** — 25 pre-defined forensic findings across 5 collapsible categories; tick findings and assign severity (Minor / Moderate / Strong)
+- **Live summary panel** — semicircle confidence gauge, findings count, likely anomaly type, and per-category contribution bars that update instantly as you tick
 - **Local rule-based scoring engine** — keyword density + severity modifiers + detail weighting, no ML model or cloud API required
 - **Standards mapping** — every finding is automatically linked to ASTM E2285, ASTM E2290, SWGMAT, ISO 32000, or NIST SP 800-86
-- **Court-admissible Expert Opinion Report** — structured plain-text report with reference ID, per-finding breakdown, and legal disclaimer, copyable and printable instantly
-- **Examination History** — every analysis is saved locally; click any past entry to re-open its full findings and report
+- **Court-admissible Expert Opinion Report** — structured plain-text report with unique reference ID, per-finding breakdown, and legal disclaimer; copy or print instantly
+- **Examination History** — every analysis is saved to `history.json`; slide-in panel lets you re-open any past result with one click
+- **Developer dry-run console** at `/dry-run` — 3 preset scenarios (forged COVID cert, forged property deed, genuine degree) with full per-category scoring trace and keyword hit breakdown
 
 ---
 
@@ -53,13 +56,14 @@ We built a guided forensic examination workflow where an FDE inputs structured o
 
 ```
 ├── src/
-│   ├── app.py              ← Flask server — routes: GET /, POST /analyze, GET|DELETE /history
+│   ├── app.py              ← Flask server (7 routes + history helpers + dry-run fixtures)
 │   ├── analyzer.py         ← Local forensic analysis engine (scoring, classification, standards)
 │   ├── report.py           ← Court-admissible expert opinion report generator
 │   ├── requirements.txt    ← Single dependency: flask
 │   ├── history.json        ← Auto-created on first analysis run (gitignored)
 │   └── templates/
-│       └── index.html      ← Single-page guided examination UI
+│       ├── index.html      ← 3-step examination UI (checkbox observations + live summary)
+│       └── dry_run.html    ← Developer scoring trace console
 ├── docs/
 │   ├── setup-guide.md
 │   ├── architecture.md
@@ -99,20 +103,28 @@ pip install -r requirements.txt
 python app.py
 ```
 
-Open **http://localhost:5000** in your browser.
+| URL | What it is |
+|---|---|
+| `http://localhost:5000` | Main app — 3-step examination workflow |
+| `http://localhost:5000/dry-run` | Dev console — preset scenarios with scoring trace |
 
 > No `.env` file needed — the engine runs entirely locally with no external services.
 
 ---
 
-## 🔍 How the Analysis Engine Works
+## 🔍 How It Works
 
-The engine in [`src/analyzer.py`](src/analyzer.py) runs in four stages:
+**Observations screen (Step 2)**
+The examiner ticks findings from 25 pre-defined indicators across 5 categories and assigns a severity to each. The live summary panel updates the confidence gauge and category bars instantly — before any server call is made.
 
-1. **Keyword matching** — each observation is scanned against a bank of forensic terms per category (e.g. `"tremor"`, `"tracing"`, `"kerning"`, `"erasure"`, `"timestamp"`)
-2. **Scoring** — `score = keyword_density + severity_boost − severity_penalty + detail_bonus` (all capped at 1.0)
-3. **Verdict** — overall confidence is a weighted average (top finding × 0.4 + rest × 0.6); verdict thresholds: ≥ 70% or 3+ anomalies → *Confirmed Forgery*, ≥ 40% or 2+ → *Suspected Forgery*
-4. **Standards mapping** — each finding is matched to its examination standard and up to 4 contextually relevant indicators are selected for the report
+**Analysis engine** (`src/analyzer.py`) runs in four stages when you submit:
+
+1. **Observation text generation** — ticked findings are converted into natural sentences (`"clear mixed font families..."`, `"significant unnatural tremor suggesting tracing..."`) that the engine can score
+2. **Keyword matching** — each sentence is scanned against a bank of ~17 forensic terms per category (`"tremor"`, `"kerning"`, `"erasure"`, `"timestamp"` …)
+3. **Scoring** — `score = keyword_density + severity_boost − severity_penalty + detail_bonus` (capped at 1.0); overall = top finding × 40% + mean(rest) × 60%
+4. **Verdict + standards mapping** — thresholds: ≥ 70% or 3+ anomalies → *Confirmed Forgery*, ≥ 40% or 2+ → *Suspected Forgery*; each finding is linked to ASTM / SWGMAT / ISO / NIST with up to 4 contextually relevant indicators
+
+**Report generator** (`src/report.py`) then formats a 5-section plain-text court report with a unique reference ID, per-finding confidence bars, standard citations, and a legal disclaimer.
 
 ---
 
@@ -129,8 +141,8 @@ The engine in [`src/analyzer.py`](src/analyzer.py) runs in four stages:
 
 ## ⚠️ Known Limitations
 
-- The scoring engine uses keyword matching — nuanced observations that avoid standard forensic terminology may receive lower confidence scores than warranted
-- No image upload or OCR; all observations must be entered as text by the examiner
+- The scoring engine uses keyword matching — the observation sentences generated from checkboxes are designed to trigger the right keywords, but free-text nuance is not captured
+- No image upload or OCR; all observations are structured checkbox selections
 - History is stored in a local `history.json` file — not suitable for multi-user or networked deployments without modification
 - Output is a decision-support tool and must be independently verified by a qualified FDE before use in legal proceedings
 
