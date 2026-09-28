@@ -4,76 +4,93 @@
 
 ## Prerequisites
 
-Before you begin, ensure you have the following installed:
-
-- [ ] [e.g., Python 3.11+]
-- [ ] [e.g., Node.js 18+]
-- [ ] [e.g., Docker Desktop]
-- [ ] [e.g., An IBM Cloud account with watsonx.ai access]
+- [x] Python 3.10 or higher
+- [x] pip (comes with Python)
+- [ ] No Node.js, Docker, or cloud account required — runs fully locally
 
 ## Environment Variables
 
-Copy `.env.example` to `.env` and fill in the values:
+Copy `.env.example` to `.env` (optional — the app works with defaults):
 
 ```bash
-cp .env.example .env
+# Windows
+copy src\.env.example src\.env
+
+# macOS / Linux
+cp src/.env.example src/.env
 ```
+
+The only variable that matters for local development is `APP_PORT` (default `5000`).
+All other variables are unused by the local analysis engine.
 
 | Variable | Description | Required |
 |---|---|---|
-| `WATSONX_API_KEY` | Your IBM watsonx.ai API key | Yes |
-| `WATSONX_PROJECT_ID` | Your watsonx.ai project ID | Yes |
-| `DATABASE_URL` | PostgreSQL connection string | Yes |
-| `SLACK_WEBHOOK_URL` | Slack webhook for alerts | No |
+| `APP_PORT` | Port the Flask server listens on | No (default `5000`) |
+| `APP_ENV` | `development` enables `/dry-run`; `production` blocks it | No (default `development`) |
+| `WATSONX_API_KEY` | watsonx.ai API key — not used by the local engine | No |
 
 ## Installation
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/[your-org]/[your-repo].git
-cd [your-repo]
+git clone <repo-url>
+cd bob-ai-hackathon-ctrl-alt-elite
 
-# 2. Install backend dependencies
-[your command — e.g.: pip install -r requirements.txt]
+# 2. Install dependencies
+pip install -r src/requirements.txt
 
-# 3. Install frontend dependencies (if applicable)
-[your command — e.g.: cd frontend && npm install]
-
-# 4. Set up the database (if applicable)
-[your command — e.g.: python manage.py migrate]
+# (Optional) also install reportlab to regenerate sample PDFs
+pip install reportlab
 ```
 
 ## Running the Application
 
 ```bash
-# Start the backend
-[your command — e.g.: uvicorn app.main:app --reload]
-
-# Start the frontend (in a separate terminal, if applicable)
-[your command — e.g.: cd frontend && npm run dev]
+python src/app.py
 ```
 
-The application will be available at: `http://localhost:[PORT]`
+The application will be available at: **http://localhost:5000**
+
+To use a different port:
+
+```bash
+# Windows
+set APP_PORT=8000 && python src/app.py
+
+# macOS / Linux
+APP_PORT=8000 python src/app.py
+```
+
+## Available Routes
+
+| URL | Description |
+|---|---|
+| `http://localhost:5000/` | Main forensic examination workflow (7-step form) |
+| `http://localhost:5000/dry-run` | Developer dry-run console with pipeline trace *(dev only)* |
+| `http://localhost:5000/analyze` | POST endpoint used by the UI |
 
 ## Running Tests
 
 ```bash
-[your test command — e.g.: pytest tests/ -v]
+python -m pytest src/tests/ -v
 ```
 
-## Quick Demo (Optional)
-
-If you have a demo script or sample data to showcase the project quickly:
+## Regenerating Sample Data (optional)
 
 ```bash
-[e.g.: python demo/seed_demo_data.py]
-[e.g.: open http://localhost:8000/demo]
+# Regenerate the 8 sample PDFs in demo/sample_documents/
+python src/generate_dummy_pdfs.py
+
+# Regenerate the full 50-person database + 200 PDFs in demo/database/
+python src/generate_database.py
 ```
 
 ## Troubleshooting
 
 | Issue | Solution |
 |---|---|
-| [e.g., `ModuleNotFoundError`] | [e.g., Run `pip install -r requirements.txt` again] |
-| [e.g., Database connection refused] | [e.g., Ensure PostgreSQL is running: `docker compose up db`] |
-| [e.g., watsonx.ai 401 error] | [e.g., Check `WATSONX_API_KEY` in your `.env` file] |
+| `ModuleNotFoundError: No module named 'flask'` | Run `pip install -r src/requirements.txt` |
+| `ModuleNotFoundError: No module named 'reportlab'` | Run `pip install reportlab` (only needed for PDF generation) |
+| `Address already in use` on port 5000 | Set `APP_PORT=8000` (or any free port) |
+| `/dry-run` returns 403 | Check that `APP_ENV` is not set to `production` |
+| `pytest` not found | Run `pip install pytest` |
