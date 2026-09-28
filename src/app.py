@@ -1,11 +1,8 @@
 import os
 import sys
-<<<<<<< HEAD
 import json
-from datetime import datetime
-=======
 import time
->>>>>>> 77a515cad973e1021c333666749331deb3604b81
+from datetime import datetime
 
 # Ensure src/ is on the path when running directly
 sys.path.insert(0, os.path.dirname(__file__))
