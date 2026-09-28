@@ -1,5 +1,7 @@
 import os
 import sys
+import json
+from datetime import datetime
 
 # Ensure src/ is on the path when running directly
 sys.path.insert(0, os.path.dirname(__file__))
@@ -9,6 +11,20 @@ from analyzer import analyze
 from report import generate_report
 
 app = Flask(__name__, template_folder="templates")
+
+HISTORY_FILE = os.path.join(os.path.dirname(__file__), "history.json")
+
+
+def _load_history():
+    if os.path.exists(HISTORY_FILE):
+        with open(HISTORY_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return []
+
+
+def _save_history(history):
+    with open(HISTORY_FILE, "w", encoding="utf-8") as f:
+        json.dump(history, f, ensure_ascii=False, indent=2)
 
 
 @app.route("/")
@@ -48,7 +64,7 @@ def run_analysis():
         for f in result.findings
     ]
 
-    return jsonify({
+    response = {
         "document_type": result.document_type,
         "overall_confidence": result.overall_confidence,
         "overall_confidence_label": result.overall_confidence_label,
@@ -57,7 +73,39 @@ def run_analysis():
         "primary_anomaly": result.primary_anomaly,
         "findings": findings_json,
         "report": report_text,
-    })
+    }
+
+    # Persist to history
+    history = _load_history()
+    entry = {
+        "id": datetime.now().strftime("FDE-%Y%m%d-%H%M%S"),
+        "timestamp": datetime.now().isoformat(timespec="seconds"),
+        "examiner_name": data.get("examiner_name", ""),
+        **response,
+    }
+    history.insert(0, entry)   # newest first
+    _save_history(history)
+
+    return jsonify(response)
+
+
+@app.route("/history", methods=["GET"])
+def get_history():
+    return jsonify(_load_history())
+
+
+@app.route("/history/<entry_id>", methods=["DELETE"])
+def delete_history_entry(entry_id):
+    history = _load_history()
+    history = [e for e in history if e["id"] != entry_id]
+    _save_history(history)
+    return jsonify({"ok": True})
+
+
+@app.route("/history", methods=["DELETE"])
+def clear_history():
+    _save_history([])
+    return jsonify({"ok": True})
 
 
 if __name__ == "__main__":
